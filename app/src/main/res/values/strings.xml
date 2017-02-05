@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">UnlockFood</string>
+    <string name="pincode_screen_banner">ca-app-pub-6880520122218285/4271047650</string>
+    <string name="old_banner">ca-app-pub-5096028997370190/8401993661</string>
+
+    <string name="ok">Ok</string>
+    <string name="done">Done</string>
+    <string name="Cancel">Cancel</string>
 </resources>

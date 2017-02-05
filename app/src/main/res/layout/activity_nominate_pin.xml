@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_pin"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/main_background"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context="com.unlockfood.unlockfood.activity.PinActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:elevation="16dp"
+        android:minHeight="?attr/actionBarSize"
+        app:popupTheme="@style/Theme.AppCompat.NoActionBar"
+        app:theme="@style/Theme.AppCompat.NoActionBar" />
+
+
+    <com.unlockfood.unlockfood.widgets.TextViewLight
+        android:id="@+id/tvHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="Enter Passcode"
+        android:textColor="#fff" />
+
+    <LinearLayout
+        android:id="@+id/containerPin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvHeader"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/cb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/pin_background"
+            android:clickable="false"
+            android:scaleX="0.35"
+            android:scaleY="0.35" />
+
+        <CheckBox
+            android:id="@+id/cb2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/pin_background"
+            android:clickable="false"
+            android:scaleX="0.35"
+            android:scaleY="0.35" />
+
+        <CheckBox
+            android:id="@+id/cb3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/pin_background"
+            android:clickable="false"
+            android:scaleX="0.35"
+            android:scaleY="0.35" />
+
+        <CheckBox
+            android:id="@+id/cb4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/pin_background"
+            android:clickable="false"
+            android:scaleX="0.35"
+            android:scaleY="0.35" />
+
+
+        <!--<ImageView android:visibility="visible"-->
+        <!--android:id="@+id/pin"-->
+        <!--android:layout_width="12dp"-->
+        <!--android:layout_height="12dp"-->
+        <!--android:layout_marginEnd="24dp"-->
+        <!--android:layout_marginRight="24dp"-->
+        <!--android:src="@drawable/dot_normal" />-->
+
+        <!--<ImageView android:visibility="visible"-->
+        <!--android:id="@+id/pin2"-->
+        <!--android:layout_width="12dp"-->
+        <!--android:layout_height="12dp"-->
+        <!--android:layout_marginEnd="24dp"-->
+        <!--android:layout_marginRight="24dp"-->
+        <!--android:src="@drawable/dot_normal" />-->
+
+        <!--<ImageView android:visibility="visible"-->
+        <!--android:id="@+id/pin3"-->
+        <!--android:layout_width="12dp"-->
+        <!--android:layout_height="12dp"-->
+        <!--android:layout_marginEnd="24dp"-->
+        <!--android:layout_marginRight="24dp"-->
+        <!--android:src="@drawable/dot_normal" />-->
+
+        <!--<ImageView android:visibility="visible"-->
+        <!--android:id="@+id/pin4"-->
+        <!--android:layout_width="12dp"-->
+        <!--android:layout_height="12dp"-->
+        <!--android:src="@drawable/dot_normal" />-->
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/containerPin"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="48dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:id="@+id/iv1"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:src="@drawable/filler_number"
+                android:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/iv2"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
+                android:src="@drawable/filler_number"
+                android:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/iv3"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:src="@drawable/filler_number"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:id="@+id/iv4"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:src="@drawable/filler_number"
+                android:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/iv5"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
+                android:src="@drawable/filler_number"
+                android:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/iv6"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:src="@drawable/filler_number"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:id="@+id/iv7"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:src="@drawable/filler_number"
+                android:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/iv8"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
+                android:src="@drawable/filler_number"
+                android:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/iv9"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:src="@drawable/filler_number"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/iv0"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
+                android:src="@drawable/filler_number"
+                android:visibility="visible" />
+
+            <ImageView
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:visibility="visible" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <com.unlockfood.unlockfood.widgets.TextViewMed
+            android:id="@+id/tvSettings"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="Settings"
+            android:textColor="@drawable/textview_selector"
+            android:visibility="invisible" />
+
+        <com.unlockfood.unlockfood.widgets.TextViewMed
+            android:id="@+id/tvCancel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="Cancel"
+            android:textColor="@drawable/textview_selector" />
+
+    </LinearLayout>
+
+</RelativeLayout>

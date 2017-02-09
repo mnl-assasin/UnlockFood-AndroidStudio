@@ -6,8 +6,10 @@ import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -17,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.unlockfood.unlockfood.R;
@@ -32,6 +35,8 @@ import butterknife.OnClick;
 import static com.unlockfood.unlockfood.activity.MainActivity.RESULT_ENABLE;
 
 public class PinActivity extends BaseActivity {
+
+    private static final String TAG = PinActivity.class.getSimpleName();
 
     @Bind(R.id.activity_pin)
     RelativeLayout activityPin;
@@ -87,14 +92,19 @@ public class PinActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         loadAds();
-
+        initMasterPin();
     }
 
     private void loadAds() {
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
-//        adView.loadAd(adRequest);
+        new AdAsyncTask().execute();
     }
 
+    private void initMasterPin() {
+        String masterPin = EZSharedPreferences.getMasterPin(PinActivity.this);
+        Log.d(TAG, masterPin);
+        if (masterPin.equals(""))
+            startActivity(new Intent(PinActivity.this, NominatePinActivity.class));
+    }
 
     @OnClick({R.id.iv1, R.id.iv2, R.id.iv3, R.id.iv4, R.id.iv5, R.id.iv6, R.id.iv7, R.id.iv8, R.id.iv9, R.id.iv0, R.id.tvSettings, R.id.tvCancel})
     public void onClick(View view) {
@@ -237,5 +247,86 @@ public class PinActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
+        onCancelClick();
+    }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_HOME:
+                Log.d(TAG, "KEY CODE");
+                return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    private class AdAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            AdRequest adRequest = new AdRequest.Builder().build();
+//                    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
+            adView.loadAd(adRequest);
+
+            adView.setAdListener(new AdListener() {
+                @Override
+                public void onAdClosed() {
+                    super.onAdClosed();
+                }
+
+                @Override
+                public void onAdFailedToLoad(int errorCode) {
+                    super.onAdFailedToLoad(errorCode);
+                }
+
+                @Override
+                public void onAdLeftApplication() {
+                    super.onAdLeftApplication();
+                }
+
+                @Override
+                public void onAdOpened() {
+//                    super.onAdOpened();
+                    Log.d(TAG, "Don't open the ad");
+                }
+
+                @Override
+                public void onAdLoaded() {
+                    super.onAdLoaded();
+                }
+            });
+
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        cb1.setChecked(false);
+        cb2.setChecked(false);
+        cb3.setChecked(false);
+        cb4.setChecked(false);
+
+        pinCode = "";
+
+    }
+
+    @Override
+    protected void onUserLeaveHint() {
+//        super.onUserLeaveHint();
+//        onCancelClick();
+//        return;
+    }
 }

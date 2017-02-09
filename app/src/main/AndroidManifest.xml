@@ -50,7 +50,8 @@
         </receiver>
 
         <activity android:name=".activity.NominatePinActivity" />
-        <activity android:name=".activity.SettingsActivity"></activity>
+        <activity android:name=".activity.SettingsActivity" />
+        <activity android:name=".activity.HelpActivity"></activity>
     </application>
 
 </manifest>

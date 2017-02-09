@@ -80,7 +80,6 @@ public class NominatePinActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initData();
     }
 
@@ -91,9 +90,11 @@ public class NominatePinActivity extends AppCompatActivity {
         if (root == null)
             root = "";
 
+        Log.d(TAG, "Root: " + root);
         masterPin = EZSharedPreferences.getMasterPin(getApplicationContext());
-        if (root != null) {
+        if (!root.equals("")) {
             Log.d(TAG, root);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             tvHeader.setText("Enter passcode");
         } else {
             Log.d(TAG, "NO ROOT");

@@ -8,9 +8,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 
 import com.unlockfood.unlockfood.R;
 import com.unlockfood.unlockfood.builder.DialogBuilder;
@@ -19,6 +21,8 @@ import com.unlockfood.unlockfood.receiver.AdminReceiver;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import pl.droidsonroids.gif.GifImageView;
 
 public class MainActivity extends BaseActivity {
 
@@ -28,15 +32,31 @@ public class MainActivity extends BaseActivity {
     WebView webView;
 
     static final int RESULT_ENABLE = 1;
+    @Bind(R.id.gif)
+    GifImageView gif;
+
+    @Bind(R.id.btnGetStarted)
+    Button btnGetStarted;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+//        startActivity(new Intent(MainActivity.this, PinActivity.class));
         initPermissions();
         initMasterPin();
         loadURL();
+    }
+
+    @OnClick(R.id.btnGetStarted)
+    public void onClick() {
+
+        gif.setVisibility(View.INVISIBLE);
+        btnGetStarted.setVisibility(View.INVISIBLE);
+        webView.setVisibility(View.VISIBLE);
+
     }
 
 
@@ -54,8 +74,8 @@ public class MainActivity extends BaseActivity {
                     .ACTION_ADD_DEVICE_ADMIN);
             intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN,
                     compName);
-            intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION,
-                    "Additional text explaining why this needs to be added.");
+//            intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION,
+//                    "Additional text explaining why this needs to be added.");
             startActivityForResult(intent, RESULT_ENABLE);
         }
     }
@@ -74,7 +94,7 @@ public class MainActivity extends BaseActivity {
 
         webView.setWebViewClient(new WebViewClient() {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-//                Log.i(TAG, "Processing webView url click...");
+                Log.i(TAG, "Processing webView url click... " + url);
                 view.loadUrl(url);
                 return true;
             }
@@ -99,7 +119,8 @@ public class MainActivity extends BaseActivity {
 //                alertDialog.show();
             }
         });
-        webView.loadUrl("http://www.unlockfood.com/ufApp");
+        webView.loadUrl("http://www.unlockfood.com/ufApp/createAccount.php");
+
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -119,4 +140,6 @@ public class MainActivity extends BaseActivity {
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+
 }

@@ -6,4 +6,19 @@
     <string name="ok">Ok</string>
     <string name="done">Done</string>
     <string name="Cancel">Cancel</string>
+
+    <string name="hiw">How it works</string>
+    <string name="hiw_desc"> • UnlockFood places a banner on your lock screen which generates advertising revenue every time you unlock your phone. That money is then used to feed hungry people all over the world.</string>
+
+    <string name="htu">How to Use</string>
+    <string name="htu_1">1. Download unlockfood app for free on google play</string>
+    <string name="htu_2">2. Install the app</string>
+    <string name="htu_3">3. Unlock your phone using app</string>
+    <string name="htu_4">4. Tap the banner ads</string>
+    <string name="htu_5">5. Check the dashboard by click the app icon</string>
+
+    <string name="ki">Known Issues:</string>
+    <string name="ki_desc"> • App is not meant to override the actual android pincode settings due to security purpose.</string>
+
+
 </resources>

@@ -49,7 +49,10 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".activity.NominatePinActivity" />
+        <activity android:name=".activity.NominatePinActivity" >
+
+
+        </activity>
         <activity android:name=".activity.SettingsActivity" />
         <activity android:name=".activity.HelpActivity"></activity>
     </application>

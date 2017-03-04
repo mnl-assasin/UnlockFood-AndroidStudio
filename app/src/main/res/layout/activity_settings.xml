@@ -53,6 +53,25 @@
         android:text="Device Administrator" />
 
 
+    <LinearLayout
+        android:id="@+id/layoutUninstall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/swDeviceAdmin"
+        android:clickable="true"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Uninstall UnlockFood"
+            android:textColor="#f00"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+
     <!--<LinearLayout-->
     <!--android:id="@+id/layoutChangePin"-->
     <!--android:layout_width="match_parent"-->

@@ -265,6 +265,17 @@
             android:text="Cancel"
             android:textColor="@drawable/textview_selector" />
 
+        <com.unlockfood.unlockfood.widgets.TextViewMed
+            android:id="@+id/tvDelete"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:gravity="center"
+            android:text="Delete"
+            android:textColor="@drawable/textview_selector"
+            android:visibility="gone" />
+
     </LinearLayout>
 
 </RelativeLayout>

@@ -63,6 +63,8 @@ public class NominatePinActivity extends AppCompatActivity {
     TextViewMed tvSettings;
     @Bind(R.id.tvCancel)
     TextViewMed tvCancel;
+    @Bind(R.id.tvDelete)
+    TextViewMed tvDelete;
 
     String masterPin = "";
     String oldPin = "";
@@ -113,7 +115,7 @@ public class NominatePinActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @OnClick({R.id.iv1, R.id.iv2, R.id.iv3, R.id.iv4, R.id.iv5, R.id.iv6, R.id.iv7, R.id.iv8, R.id.iv9, R.id.iv0, R.id.tvSettings, R.id.tvCancel})
+    @OnClick({R.id.iv1, R.id.iv2, R.id.iv3, R.id.iv4, R.id.iv5, R.id.iv6, R.id.iv7, R.id.iv8, R.id.iv9, R.id.iv0, R.id.tvSettings, R.id.tvCancel, R.id.tvDelete})
     public void onClick(View view) {
         switch (view.getId()) {
 
@@ -150,6 +152,10 @@ public class NominatePinActivity extends AppCompatActivity {
             case R.id.tvCancel:
                 onCancelClick();
                 break;
+
+            case R.id.tvDelete:
+                onDeleteClick();
+                break;
         }
     }
 
@@ -173,12 +179,40 @@ public class NominatePinActivity extends AppCompatActivity {
         }
     }
 
+    private void onDeleteClick() {
+
+        if (tempPin.length() > 0)
+            tempPin = tempPin.substring(0, tempPin.length() - 1);
+
+
+        if (tempPin.length() == 0) {
+            tvCancel.setVisibility(View.VISIBLE);
+            tvDelete.setVisibility(View.GONE);
+        }
+
+        switch (tempPin.length()) {
+            case 0:
+                cb1.setChecked(false);
+                break;
+            case 1:
+                cb2.setChecked(false);
+                break;
+            case 2:
+                cb3.setChecked(false);
+                break;
+
+        }
+
+
+    }
+
 
     private void addPin(int i) {
-//        tvHeader.setText("Enter Passcode");
-
         tempPin += String.valueOf(i);
-        Log.d(TAG, "ADD PIN: " + i + " PIN: " + tempPin);
+
+        tvCancel.setVisibility(View.GONE);
+        tvDelete.setVisibility(View.VISIBLE);
+
         switch (tempPin.length()) {
             case 1:
                 cb1.setChecked(true);

@@ -71,6 +71,8 @@ public class PinActivity extends BaseActivity {
     TextViewMed tvSettings;
     @Bind(R.id.tvCancel)
     TextViewMed tvCancel;
+    @Bind(R.id.tvDelete)
+    TextViewMed tvDelete;
 
     String pinCode = "";
     @Bind(R.id.cb1)
@@ -106,7 +108,7 @@ public class PinActivity extends BaseActivity {
             startActivity(new Intent(PinActivity.this, NominatePinActivity.class));
     }
 
-    @OnClick({R.id.iv1, R.id.iv2, R.id.iv3, R.id.iv4, R.id.iv5, R.id.iv6, R.id.iv7, R.id.iv8, R.id.iv9, R.id.iv0, R.id.tvSettings, R.id.tvCancel})
+    @OnClick({R.id.iv1, R.id.iv2, R.id.iv3, R.id.iv4, R.id.iv5, R.id.iv6, R.id.iv7, R.id.iv8, R.id.iv9, R.id.iv0, R.id.tvSettings, R.id.tvCancel, R.id.tvDelete})
     public void onClick(View view) {
         switch (view.getId()) {
 
@@ -146,14 +148,45 @@ public class PinActivity extends BaseActivity {
             case R.id.tvCancel:
                 onCancelClick();
                 break;
+            case R.id.tvDelete:
+                onDeleteClick();
+                break;
         }
     }
 
+    private void onDeleteClick() {
+
+        if (pinCode.length() > 0)
+            pinCode = pinCode.substring(0, pinCode.length() - 1);
+
+
+        if(pinCode.length() == 0) {
+            tvCancel.setVisibility(View.VISIBLE);
+            tvDelete.setVisibility(View.GONE);
+        }
+
+        switch(pinCode.length()){
+            case 0:
+                cb1.setChecked(false);
+                break;
+            case 1:
+                cb2.setChecked(false);
+                break;
+            case 2:
+                cb3.setChecked(false);
+                break;
+
+        }
+
+
+    }
 
     private void addPin(int i) {
         tvHeader.setText("Enter Passcode");
 
         pinCode += String.valueOf(i);
+        tvCancel.setVisibility(View.GONE);
+        tvDelete.setVisibility(View.VISIBLE);
         switch (pinCode.length()) {
             case 1:
                 cb1.setChecked(true);

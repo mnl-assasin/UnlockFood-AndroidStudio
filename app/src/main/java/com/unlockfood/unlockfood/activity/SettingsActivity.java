@@ -4,6 +4,7 @@ import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -41,6 +42,8 @@ public class SettingsActivity extends AppCompatActivity {
     String destination = "";
     @Bind(R.id.layoutHelp)
     LinearLayout layoutHelp;
+    @Bind(R.id.layoutUninstall)
+    LinearLayout layoutUninstall;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +115,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
 
-    @OnClick({R.id.layoutHelp, R.id.layoutChangePin})
+    @OnClick({R.id.layoutHelp, R.id.layoutChangePin, R.id.layoutUninstall})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layoutHelp:
@@ -124,6 +127,34 @@ public class SettingsActivity extends AppCompatActivity {
                 destination = "change pin";
                 startActivity(new Intent(SettingsActivity.this, NominatePinActivity.class).putExtra("root", "change pin"));
                 break;
+
+            case R.id.layoutUninstall:
+                uninstallApp();
+                break;
+
         }
+    }
+
+    boolean activeAdmin = false;
+
+    private void uninstallApp() {
+
+        activeAdmin = deviceManger.isAdminActive(compName);
+        if (activeAdmin)
+            deviceManger.removeActiveAdmin(compName);
+
+//        Intent intent = new Intent(Intent.ACTION_UNINSTALL_PACKAGE);
+//        intent.setData(Uri.parse("package:" + "com.unlockfood.unlockfood"));
+//        intent.putExtra(Intent.EXTRA_RETURN_RESULT, true);
+//        startActivityForResult(intent, 200);
+
+        Intent intent = new Intent(Intent.ACTION_DELETE);
+        intent.setData(Uri.parse("package:com.unlockfood.unlockfood"));
+        startActivity(intent);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

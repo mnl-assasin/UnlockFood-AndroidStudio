@@ -9,8 +9,10 @@ import android.content.SharedPreferences;
 
 public class EZSharedPreferences {
 
-    private final static String USER_PREFERENCES = "MarikinaEIS";
+    private final static String USER_PREFERENCES = "UnlockfoodPrefs";
     private final static String KEY_MASTERPIN = "MASTER PIN";
+    private final static String IS_LOGIN = "isLogin";
+    private final static String KEY_UNLOCK = "unlock";
 
 
     public static SharedPreferences getSharedPref(Context ctx) {
@@ -31,6 +33,14 @@ public class EZSharedPreferences {
         return getSharedPref(ctx).getString(KEY_MASTERPIN, "");
     }
 
+    public static boolean isLogin(Context ctx) {
+        return getSharedPref(ctx).getBoolean(IS_LOGIN, false);
+    }
+
+    public static int getUnlockCount(Context ctx) {
+        return getSharedPref(ctx).getInt(KEY_UNLOCK, 0);
+    }
+
 
     /**
      * S E T T E R
@@ -42,6 +52,26 @@ public class EZSharedPreferences {
         editor.putString(KEY_MASTERPIN, masterPin);
         editor.apply();
 
+    }
+
+    public static int setLogin(Context ctx, boolean isLogin) {
+
+        SharedPreferences.Editor editor = getSharedPref(ctx).edit();
+        editor.putBoolean(IS_LOGIN, isLogin);
+        editor.apply();
+
+        if (isLogin) {
+            return getUnlockCount(ctx);
+        } else return 0;
+    }
+
+    public static void setUnlockCount(Context ctx) {
+        SharedPreferences.Editor editor = getSharedPref(ctx).edit();
+        boolean isLogin = isLogin(ctx);
+
+        if (!isLogin) {
+            editor.putInt(KEY_UNLOCK, getUnlockCount(ctx) + 1);
+        }
     }
 
 

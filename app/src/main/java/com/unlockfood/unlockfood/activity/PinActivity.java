@@ -160,12 +160,12 @@ public class PinActivity extends BaseActivity {
             pinCode = pinCode.substring(0, pinCode.length() - 1);
 
 
-        if(pinCode.length() == 0) {
+        if (pinCode.length() == 0) {
             tvCancel.setVisibility(View.VISIBLE);
             tvDelete.setVisibility(View.GONE);
         }
 
-        switch(pinCode.length()){
+        switch (pinCode.length()) {
             case 0:
                 cb1.setChecked(false);
                 break;

@@ -6,7 +6,7 @@
     android:id="@+id/activity_pin"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/pin_bg"
+    android:background="@android:color/black"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context="com.unlockfood.unlockfood.activity.PinActivity">

@@ -34,7 +34,7 @@
 
         <receiver android:name=".receiver.LockReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.intent.action.USER_UNLOCKED" />
             </intent-filter>
         </receiver>
         <receiver
@@ -49,7 +49,7 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".activity.NominatePinActivity" >
+        <activity android:name=".activity.NominatePinActivity">
 
 
         </activity>

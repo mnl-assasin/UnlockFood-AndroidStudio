@@ -1,0 +1,260 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    tools:context="com.unlockfood.unlockfood.fragment.SettingsFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/headerSettings"
+        android:gravity="center"
+        android:padding="16dp"
+        android:text="SETTINGS"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/ivProfile"
+                android:layout_width="128dp"
+                android:layout_height="128dp"
+                android:layout_gravity="center"
+                android:src="@drawable/img_profile" />
+
+            <Button
+                android:id="@+id/btnUpload"
+                android:layout_width="128dp"
+                android:layout_height="31dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="31dp"
+                android:background="@color/headerSettings"
+                android:gravity="center"
+                android:text="UPLOAD"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="ACCOUNT SETTINGS"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/textPrimary"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="ACCOUNT ID"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/textGreen"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:text="Account id"
+                android:textColor="@color/textColorTertiary"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="ACCOUNT NAME"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/textGreen"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="31dp"
+                android:text="Account name"
+                android:textColor="@color/textColorTertiary"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="UPDATE ACCOUNT"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/textPrimary"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/termsDivider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/etFName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:hint="*First name"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp"
+                    android:textColorHint="@color/editTextHint" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/termsDivider" />
+
+                <EditText
+                    android:id="@+id/etLName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:hint="*Last name"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="8dp"
+                    android:paddingTop="8dp"
+                    android:textColorHint="@color/editTextHint" />
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="8dp"
+                android:background="@color/termsDivider" />
+
+            <Button
+                android:id="@+id/btnUpdate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_weight="1"
+                android:background="#74c322"
+                android:text="UPDATE ACCOUNT"
+                android:textColor="#fff"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="CHANGE PASSWORD"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/textPrimary"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="8dp"
+                android:background="@color/termsDivider" />
+
+            <EditText
+                android:id="@+id/etOldPw"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="*Old Password"
+                android:inputType="textPassword"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:textColorHint="@color/editTextHint" />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="8dp"
+                android:background="@color/termsDivider" />
+
+            <EditText
+                android:id="@+id/etNewPw"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="*New password"
+                android:inputType="textPassword"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:textColorHint="@color/editTextHint" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="8dp"
+                android:background="@color/termsDivider" />
+
+            <EditText
+                android:id="@+id/etConfirmPw"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="*Confirm password"
+                android:inputType="textPassword"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:textColorHint="@color/editTextHint" />
+
+            <Button
+                android:id="@+id/btnChangePW"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="1"
+                android:background="#74c322"
+                android:text="CHANGE PASSWORD"
+                android:textColor="#fff"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/btnLogout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/headerSettings"
+                    android:text="LOG OUT"
+                    android:textColor="#fff"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

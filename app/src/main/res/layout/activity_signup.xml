@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.unlockfood.unlockfood.activity.SignupActivity">
+
+    <include layout="@layout/header" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="32dp"
+                android:text="Sign Up"
+                android:textColor="@color/color3"
+                android:textSize="28sp" />
+
+            <EditText
+                android:id="@+id/etFName"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@color/editTextBackground"
+                android:hint="First Name"
+                android:paddingBottom="8dp"
+                android:paddingLeft="24dp"
+                android:paddingTop="8dp"
+                android:textColorHint="@color/editTextHint" />
+
+            <EditText
+                android:id="@+id/etLName"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@color/editTextBackground"
+                android:hint="Last Name"
+                android:paddingBottom="8dp"
+                android:paddingLeft="24dp"
+                android:paddingTop="8dp"
+                android:textColorHint="@color/editTextHint" />
+
+            <EditText
+                android:id="@+id/etUsername"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@color/editTextBackground"
+                android:hint="Username"
+                android:paddingBottom="8dp"
+                android:paddingLeft="24dp"
+                android:paddingTop="8dp"
+                android:textColorHint="@color/editTextHint" />
+
+            <EditText
+                android:id="@+id/etEmail"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@color/editTextBackground"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:paddingBottom="8dp"
+                android:paddingLeft="24dp"
+                android:paddingTop="8dp"
+                android:textColorHint="@color/editTextHint" />
+
+            <EditText
+                android:id="@+id/etPassword"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@color/editTextBackground"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:paddingBottom="8dp"
+                android:paddingLeft="24dp"
+                android:paddingTop="8dp"
+                android:textColorHint="@color/editTextHint" />
+
+            <EditText
+                android:id="@+id/etRetypePassword"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@color/editTextBackground"
+                android:hint="Retype Password"
+                android:inputType="textPassword"
+                android:paddingBottom="8dp"
+                android:paddingLeft="24dp"
+                android:paddingTop="8dp"
+                android:textColorHint="@color/editTextHint" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="By signing up, you agree to the"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/dashboardTextColor" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Privacy Policy "
+                    android:textColor="@color/color1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="and "
+                    android:textColor="@color/dashboardTextColor" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Terms and Conditions"
+                    android:textColor="@color/color1" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnSubmit"
+                android:layout_width="300dp"
+                android:layout_height="48dp"
+                android:layout_marginBottom="32dp"
+                android:background="@color/signupBackground"
+                android:text="Submit"
+                android:textAllCaps="false"
+                android:textColor="@color/signinTextColor" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

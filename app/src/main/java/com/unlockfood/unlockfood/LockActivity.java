@@ -13,7 +13,9 @@ import com.unlockfood.unlockfood.activity.BaseActivity;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+// UNUSED
 public class LockActivity extends BaseActivity {
+
 
     String TAG = LockActivity.class.getSimpleName();
     @Bind(R.id.adView)

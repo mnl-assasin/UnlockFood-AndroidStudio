@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context="com.unlockfood.unlockfood.activity.LoginActivity">
+
+    <include layout="@layout/header" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:background="@color/colorPrimaryDark"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingBottom="16dp"
+                android:paddingTop="32dp">
+
+                <com.unlockfood.unlockfood.widgets.TextViewMyriad
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:text="Sign In"
+                    android:textColor="@color/color1"
+                    android:textSize="28sp" />
+
+                <EditText
+                    android:id="@+id/etEmail"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    android:background="@color/editTextBackground"
+                    android:hint="Email"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="24dp"
+                    android:paddingTop="8dp"
+                    android:textColorHint="@color/editTextHint" />
+
+                <EditText
+                    android:id="@+id/etPassword"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="32dp"
+                    android:background="@color/editTextBackground"
+                    android:hint="Passsword"
+                    android:inputType="textPassword"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="24dp"
+                    android:paddingTop="8dp"
+                    android:textColorHint="@color/editTextHint" />
+
+                <Button
+                    android:id="@+id/btnSigin"
+                    android:layout_width="300dp"
+                    android:layout_height="48dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@color/signinBackground"
+                    android:text="Sign In"
+                    android:textAllCaps="false"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/signinTextColor" />
+
+
+                <com.unlockfood.unlockfood.widgets.TextViewMyriad
+                    android:id="@+id/tvForgotPw"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="Forgot Password?"
+                    android:textColor="@color/forgotPasswordColor" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/containerFB"
+                android:layout_width="300dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16dp"
+
+                android:background="@color/fbLogin"
+                android:gravity="center">
+
+                <com.unlockfood.unlockfood.widgets.TextViewMyriad
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sign in with Facebook"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/signinTextColor" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/containerLogout"
+                android:layout_width="300dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16dp"
+                android:background="@color/fbLogin"
+                android:gravity="center"
+                android:visibility="gone">
+
+                <com.unlockfood.unlockfood.widgets.TextViewMyriad
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Log out in Facebook"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/signinTextColor" />
+
+            </LinearLayout>
+
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/btnGoogleSignIn"
+                android:layout_width="300dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/googleLogout"
+                android:layout_width="300dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="24dp"
+                android:background="@color/googlePlus"
+                android:gravity="center"
+                android:visibility="gone">
+
+                <com.unlockfood.unlockfood.widgets.TextViewMyriad
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Log out in Google+"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/signinTextColor" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="300dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginBottom="24dp">
+
+                <com.unlockfood.unlockfood.widgets.TextViewMyriad
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="Need an Account?"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/needAccount" />
+
+                <com.unlockfood.unlockfood.widgets.ButtonMyriad
+                    android:id="@+id/btnSignup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:background="@color/color2"
+                    android:text="Sign up"
+                    android:textAllCaps="false"
+                    android:textColor="@color/signinTextColor" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

@@ -24,4 +24,8 @@ public class FontStyle {
     public static Typeface helveticaMed(Context ctx) {
         return Typeface.createFromAsset(ctx.getAssets(), "fonts/helvetica_med.otf");
     }
+
+    public static Typeface myriad(Context ctx) {
+        return Typeface.createFromAsset(ctx.getAssets(), "fonts/myriad.otf");
+    }
 }

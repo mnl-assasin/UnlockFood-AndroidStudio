@@ -5,28 +5,22 @@
     android:layout_height="match_parent"
     android:background="#000">
 
-    <WebView xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/webView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="invisible"
-        tools:context="com.unlockfood.unlockfood.activity.MainActivity" />
-
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/gif"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
+        android:src="@drawable/main"
         android:layout_alignParentTop="true"
-        android:src="@drawable/main" />
+        android:layout_alignParentStart="true" />
 
-    <Button
+    <com.unlockfood.unlockfood.widgets.ButtonMyriad
         android:id="@+id/btnGetStarted"
-        android:layout_width="200dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:background="#4d000000"
         android:text="GET STARTED"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#fff"
         android:textStyle="bold" />
 

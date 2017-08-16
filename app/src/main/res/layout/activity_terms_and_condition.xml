@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_terms_and_condition"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.unlockfood.unlockfood.activity.TermsAndConditionActivity">
+
+    <include layout="@layout/header" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <com.unlockfood.unlockfood.widgets.TextViewMyriad
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:text="@string/tac"
+                android:textAppearance="?android:textAppearanceLarge"
+                android:textColor="@color/textHeaderColor" />
+
+            <com.unlockfood.unlockfood.widgets.TextViewMyriad
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="@string/introduction"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/textSubHeaderColor" />
+
+            <com.unlockfood.unlockfood.widgets.TextViewMyriad
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@string/introduction_desc"
+                android:textColor="@color/textColor" />
+
+            <com.unlockfood.unlockfood.widgets.TextViewMyriad
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="@string/general_rules"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/textSubHeaderColor" />
+
+            <com.unlockfood.unlockfood.widgets.TextViewMyriad
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="@string/general_rules_desc"
+                android:textColor="@color/textColor" />
+
+            <com.unlockfood.unlockfood.widgets.TextViewMyriad
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:text="@string/grd1"
+                android:textAppearance="?android:textAppearanceSmall"
+                android:textColor="@color/textColor" />
+
+            <com.unlockfood.unlockfood.widgets.TextViewMyriad
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:text="@string/grd2"
+                android:textAppearance="?android:textAppearanceSmall"
+                android:textColor="@color/textColor" />
+
+            <com.unlockfood.unlockfood.widgets.TextViewMyriad
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="@string/grd3"
+                android:textAppearance="?android:textAppearanceSmall"
+                android:textColor="@color/textColor" />
+
+            <com.unlockfood.unlockfood.widgets.TextViewMyriad
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@string/general_rules_desc2"
+                android:textColor="@color/textColor" />
+
+            <com.unlockfood.unlockfood.widgets.TextViewMyriad
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="@string/content"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/textSubHeaderColor" />
+
+            <com.unlockfood.unlockfood.widgets.TextViewMyriad
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@string/content_desc"
+                android:textColor="@color/textColor" />
+
+            <com.unlockfood.unlockfood.widgets.TextViewMyriad
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="@string/link_third_party"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/textSubHeaderColor" />
+
+            <com.unlockfood.unlockfood.widgets.TextViewMyriad
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@string/link_third_party_desc"
+                android:textColor="@color/textColor" />
+
+            <com.unlockfood.unlockfood.widgets.TextViewMyriad
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="@string/privacy_policy"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/textSubHeaderColor" />
+
+            <com.unlockfood.unlockfood.widgets.TextViewMyriad
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@string/privacy_policy_desc"
+                android:textColor="@color/textColor" />
+
+            <com.unlockfood.unlockfood.widgets.TextViewMyriad
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="@string/disclaimer"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/textSubHeaderColor" />
+
+            <com.unlockfood.unlockfood.widgets.TextViewMyriad
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@string/disclaimer_desc"
+                android:textColor="@color/textColor" />
+
+            <com.unlockfood.unlockfood.widgets.TextViewMyriad
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="@string/service_suspension"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/textSubHeaderColor" />
+
+            <com.unlockfood.unlockfood.widgets.TextViewMyriad
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@string/service_suspension_desc"
+                android:textColor="@color/textColor" />
+
+            <com.unlockfood.unlockfood.widgets.TextViewMyriad
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="@string/advertisers"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/textSubHeaderColor" />
+
+            <com.unlockfood.unlockfood.widgets.TextViewMyriad
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@string/advertisers_desc"
+                android:textColor="@color/textColor" />
+
+            <com.unlockfood.unlockfood.widgets.TextViewMyriad
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="@string/general"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/textSubHeaderColor" />
+
+            <com.unlockfood.unlockfood.widgets.TextViewMyriad
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@string/general_desc"
+                android:textColor="@color/textColor" />
+
+            <com.unlockfood.unlockfood.widgets.TextViewMyriad
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="@string/contact_us"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/textSubHeaderColor" />
+
+            <com.unlockfood.unlockfood.widgets.TextViewMyriad
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@string/contact_us_desc"
+                android:textColor="@color/textColor" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/termsButtonBackground">
+
+        <com.unlockfood.unlockfood.widgets.ButtonMyriad
+            android:id="@+id/btnCancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/termsButtonBackground"
+            android:text="CANCEL"
+            android:textColor="@color/textHeaderColor" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"
+            android:background="@color/termsDivider" />
+
+        <com.unlockfood.unlockfood.widgets.ButtonMyriad
+            android:id="@+id/btnAgree"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/termsButtonBackground"
+            android:text="I AGREE"
+            android:textColor="@color/textSubHeaderColor" />
+
+    </LinearLayout>
+</LinearLayout>

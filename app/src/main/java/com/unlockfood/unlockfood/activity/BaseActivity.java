@@ -1,5 +1,6 @@
 package com.unlockfood.unlockfood.activity;
 
+import android.app.ProgressDialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -23,5 +24,22 @@ public class BaseActivity extends AppCompatActivity {
             w.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
     }
+
+
+    ProgressDialog pDialog;
+
+    public void startProgressdialog(String message) {
+        pDialog = new ProgressDialog(this);
+        pDialog.setMessage(message);
+        pDialog.setCancelable(false);
+        pDialog.show();
+    }
+
+    public void stopProgressDialog() {
+        pDialog.dismiss();
+    }
+
+
+
 
 }

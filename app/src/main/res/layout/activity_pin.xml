@@ -3,7 +3,7 @@
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_pin"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/black"
@@ -21,14 +21,16 @@
         ads:adSize="BANNER"
         ads:adUnitId="@string/old_banner" />
 
-    <com.unlockfood.unlockfood.widgets.TextViewLight
+    <com.unlockfood.unlockfood.widgets.TextViewMyriad
         android:id="@+id/tvHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/adView"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="8dp"
         android:layout_marginTop="16dp"
-        android:text="Enter Passcode"
+        android:text="Enter PIN"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#fff" />
 
     <LinearLayout
@@ -45,8 +47,8 @@
             android:layout_height="wrap_content"
             android:button="@drawable/pin_background"
             android:clickable="false"
-            android:scaleX="0.35"
-            android:scaleY="0.35" />
+            android:scaleX="0.5"
+            android:scaleY="0.5" />
 
         <CheckBox
             android:id="@+id/cb2"
@@ -54,8 +56,8 @@
             android:layout_height="wrap_content"
             android:button="@drawable/pin_background"
             android:clickable="false"
-            android:scaleX="0.35"
-            android:scaleY="0.35" />
+            android:scaleX="0.5"
+            android:scaleY="0.5" />
 
         <CheckBox
             android:id="@+id/cb3"
@@ -63,8 +65,8 @@
             android:layout_height="wrap_content"
             android:button="@drawable/pin_background"
             android:clickable="false"
-            android:scaleX="0.35"
-            android:scaleY="0.35" />
+            android:scaleX="0.5"
+            android:scaleY="0.5" />
 
         <CheckBox
             android:id="@+id/cb4"
@@ -72,8 +74,8 @@
             android:layout_height="wrap_content"
             android:button="@drawable/pin_background"
             android:clickable="false"
-            android:scaleX="0.35"
-            android:scaleY="0.35" />
+            android:scaleX="0.5"
+            android:scaleY="0.5" />
 
 
         <!--<ImageView android:visibility="visible"-->
@@ -114,7 +116,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/containerPin"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="32dp"
         android:gravity="center"
         android:orientation="vertical">
 

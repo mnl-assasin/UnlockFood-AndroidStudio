@@ -30,7 +30,12 @@ public class SettingsActivity extends AppCompatActivity {
     Toolbar toolbar;
     @Bind(R.id.layoutChangePin)
     LinearLayout layoutChangePin;
-
+    @Bind(R.id.layoutHelp)
+    LinearLayout layoutHelp;
+    @Bind(R.id.layoutUninstall)
+    LinearLayout layoutUninstall;
+    @Bind(R.id.layoutChangeBackground)
+    LinearLayout layoutChangeBackground;
     @Bind(R.id.swDeviceAdmin)
     Switch swDeviceAdmin;
 
@@ -40,10 +45,6 @@ public class SettingsActivity extends AppCompatActivity {
 
     int RESULT_ENABLE = 100;
     String destination = "";
-    @Bind(R.id.layoutHelp)
-    LinearLayout layoutHelp;
-    @Bind(R.id.layoutUninstall)
-    LinearLayout layoutUninstall;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,29 +106,28 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (destination.equals(""))
-            finish();
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        if (destination.equals(""))
+//            finish();
+//
+//        destination = "";
+//    }
 
-        destination = "";
-    }
 
-
-    @OnClick({R.id.layoutHelp, R.id.layoutChangePin, R.id.layoutUninstall})
+    @OnClick({R.id.layoutHelp, R.id.layoutChangePin, R.id.layoutUninstall, R.id.layoutChangeBackground})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layoutHelp:
-                destination = "help";
-                startActivity(new Intent(SettingsActivity.this, HelpActivity.class).putExtra("root", "change pin"));
-
+                startActivity(new Intent(SettingsActivity.this, HelpActivity.class));
                 break;
             case R.id.layoutChangePin:
-                destination = "change pin";
-                startActivity(new Intent(SettingsActivity.this, NominatePinActivity.class).putExtra("root", "change pin"));
+                startActivity(new Intent(SettingsActivity.this, PinChangeActivity.class));
                 break;
-
+            case R.id.layoutChangeBackground:
+                startActivity(new Intent(this, BackgroundChangeActivity.class));
+                break;
             case R.id.layoutUninstall:
                 uninstallApp();
                 break;

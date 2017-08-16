@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "867472302233",
+    "project_id": "firebase-unlockfood"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:867472302233:android:c4c7cd7ab3c8656b",
+        "android_client_info": {
+          "package_name": "com.unlockfood.unlockfood"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "867472302233-uth5ba7eru8pf8gmmpps3b0rf954s50b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.unlockfood.unlockfood",
+            "certificate_hash": "9b51e12d5d2be546df50cfe2276b0419ebe85ff6"
+          }
+        },
+        {
+          "client_id": "867472302233-1k9b9q5a3qgi52efj98vbng57b4g0nnb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7QGEAxyNgI0U4OP7I3AfkydFh5gUJ2cU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

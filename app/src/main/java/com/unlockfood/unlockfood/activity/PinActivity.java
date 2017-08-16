@@ -6,6 +6,10 @@ import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,35 +21,38 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 import com.unlockfood.unlockfood.R;
+import com.unlockfood.unlockfood.api.AdClickRequest;
+import com.unlockfood.unlockfood.api.ApiClient;
+import com.unlockfood.unlockfood.api.ApiInterface;
 import com.unlockfood.unlockfood.data.EZSharedPreferences;
+import com.unlockfood.unlockfood.data.RespCode;
 import com.unlockfood.unlockfood.receiver.AdminReceiver;
-import com.unlockfood.unlockfood.widgets.TextViewLight;
-import com.unlockfood.unlockfood.widgets.TextViewMed;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static com.unlockfood.unlockfood.activity.MainActivity.RESULT_ENABLE;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PinActivity extends BaseActivity {
 
     private static final String TAG = PinActivity.class.getSimpleName();
 
-    @Bind(R.id.activity_pin)
-    RelativeLayout activityPin;
-
     @Bind(R.id.adView)
     AdView adView;
 
     @Bind(R.id.tvHeader)
-    TextViewLight tvHeader;
+    TextView tvHeader;
 
     @Bind(R.id.iv1)
     ImageView iv1;
@@ -68,11 +75,11 @@ public class PinActivity extends BaseActivity {
     @Bind(R.id.iv0)
     ImageView iv0;
     @Bind(R.id.tvSettings)
-    TextViewMed tvSettings;
+    TextView tvSettings;
     @Bind(R.id.tvCancel)
-    TextViewMed tvCancel;
+    TextView tvCancel;
     @Bind(R.id.tvDelete)
-    TextViewMed tvDelete;
+    TextView tvDelete;
 
     String pinCode = "";
     @Bind(R.id.cb1)
@@ -86,6 +93,8 @@ public class PinActivity extends BaseActivity {
 
     @Bind(R.id.containerPin)
     LinearLayout containerPin;
+    @Bind(R.id.container)
+    RelativeLayout container;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,8 +102,31 @@ public class PinActivity extends BaseActivity {
         setContentView(R.layout.activity_pin);
         ButterKnife.bind(this);
 
+        initData();
         loadAds();
         initMasterPin();
+    }
+
+    private void initData() {
+
+        String background = EZSharedPreferences.getPinBackground(this);
+        Picasso.with(this).load(Uri.parse(background)).error(R.drawable.black).into(new Target() {
+            @Override
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                container.setBackground(new BitmapDrawable(bitmap));
+            }
+
+            @Override
+            public void onBitmapFailed(Drawable errorDrawable) {
+
+            }
+
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+            }
+        });
+
     }
 
     private void loadAds() {
@@ -105,7 +137,7 @@ public class PinActivity extends BaseActivity {
         String masterPin = EZSharedPreferences.getMasterPin(PinActivity.this);
         Log.d(TAG, masterPin);
         if (masterPin.equals(""))
-            startActivity(new Intent(PinActivity.this, NominatePinActivity.class));
+            startActivity(new Intent(PinActivity.this, PinNominateActivity.class));
     }
 
     @OnClick({R.id.iv1, R.id.iv2, R.id.iv3, R.id.iv4, R.id.iv5, R.id.iv6, R.id.iv7, R.id.iv8, R.id.iv9, R.id.iv0, R.id.tvSettings, R.id.tvCancel, R.id.tvDelete})
@@ -209,12 +241,35 @@ public class PinActivity extends BaseActivity {
 
     private void processPin(String pinCode) {
 
-//        String tempPin = "1937";
+//        String pin = "1937";
         String masterPin = EZSharedPreferences.getMasterPin(PinActivity.this);
 
-        if (masterPin.equals(pinCode)) finishAffinity();
-        else invalidPin();
+        if (masterPin.equals(pinCode)) {
+            addClick();
+            finishAffinity();
+            postClick();
+        } else invalidPin();
 
+
+    }
+
+    private void addClick() {
+        ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
+        Call<Void> call = api.postAdClicks(new AdClickRequest(String.valueOf(EZSharedPreferences.getId(this))));
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void postClick() {
 
     }
 
@@ -258,18 +313,15 @@ public class PinActivity extends BaseActivity {
     }
 
     private void enable() {
-        Intent intent = new Intent(DevicePolicyManager
-                .ACTION_ADD_DEVICE_ADMIN);
-        intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN,
-                compName);
-        intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION,
-                "Additional text explaining why this needs to be added.");
-        startActivityForResult(intent, RESULT_ENABLE);
+        Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+        intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, compName);
+//        intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, "Additional text explaining why this needs to be added.");
+        startActivityForResult(intent, RespCode.REQ_DEVICE_ADMIN);
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-            case RESULT_ENABLE:
+            case RespCode.REQ_DEVICE_ADMIN:
                 if (resultCode == Activity.RESULT_OK) {
                     Log.i("DeviceAdminSample", "Admin enabled!");
                 } else {
@@ -282,7 +334,6 @@ public class PinActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-//        super.onBackPressed();
         onCancelClick();
     }
 
@@ -311,7 +362,6 @@ public class PinActivity extends BaseActivity {
             AdRequest adRequest = new AdRequest.Builder().build();
 //                    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
             adView.loadAd(adRequest);
-
             adView.setAdListener(new AdListener() {
                 @Override
                 public void onAdClosed() {
@@ -330,7 +380,6 @@ public class PinActivity extends BaseActivity {
 
                 @Override
                 public void onAdOpened() {
-//                    super.onAdOpened();
                     Log.d(TAG, "Don't open the ad");
                 }
 

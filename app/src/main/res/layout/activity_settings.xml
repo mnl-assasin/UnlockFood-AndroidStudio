@@ -4,9 +4,26 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include
+    <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/toolbar"
-        layout="@layout/toolbar" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/headerAccount"
+        android:elevation="16dp"
+        android:minHeight="?attr/actionBarSize"
+        app:popupTheme="@style/Theme.AppCompat.NoActionBar"
+        app:theme="@style/Theme.AppCompat.NoActionBar">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SETTINGS"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+
+    </android.support.v7.widget.Toolbar>
 
     <LinearLayout
         android:id="@+id/layoutHelp"
@@ -21,7 +38,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Help"
-            android:textColor="#000" />
+            android:textColor="@color/headerRewards"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -38,8 +57,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Change pin"
-            android:textColor="#000" />
+            android:text="Change PIN"
+            android:textColor="@color/headerRewards"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -50,11 +71,13 @@
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/layoutChangePin"
         android:padding="16dp"
-        android:text="Device Administrator" />
-
+        android:text="Device Administrator"
+        android:textColor="@color/headerRewards"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
     <LinearLayout
-        android:id="@+id/layoutUninstall"
+        android:id="@+id/layoutChangeBackground"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/swDeviceAdmin"
@@ -65,8 +88,29 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Upload background image"
+            android:textColor="@color/headerRewards"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/layoutUninstall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layoutChangeBackground"
+        android:clickable="true"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="Uninstall UnlockFood"
             android:textColor="#f00"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
     </LinearLayout>

@@ -1,6 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimaryDark">#231f20</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="textHeaderColor">#ed1c24</color>
+    <color name="textSubHeaderColor">#39b54a</color>
+    <color name="textColor">#555555</color>
+    <color name="windowBackground">#fff</color>
+
+    <color name="termsButtonBackground">#dadada</color>
+    <color name="termsDivider">#bebebe</color>
+
+    <color name="color1">#b0d17a</color>
+    <color name="editTextBackground">#e9e9e9</color>
+    <color name="editTextHint">#989898</color>
+    <color name="signinBackground">#f36523</color>
+    <color name="signinTextColor">#fff7e1</color>
+    <color name="forgotPasswordColor">#8a8889</color>
+    <color name="fbLogin">#3c5a98</color>
+    <color name="googlePlus">#df3c3d</color>
+
+    <color name="needAccount">#4b4b4b</color>
+    <color name="color2">#8ec641</color>
+    <color name="color3">#037760</color>
+    <color name="dashboardTextColor">#505050</color>
+    <color name="signupBackground">#f05052</color>
+
+    <color name="dashboardDivider">#dedede</color>
+    <color name="menuAccount">#ffe3e5</color>
+    <color name="menuReward">#ddffde</color>
+    <color name="menuHOF">#e7f9f9</color>
+    <color name="menuSettings">#ffefbe</color>
+
+    <color name="headerAccount">#e54d4c</color>
+    <color name="headerRewards">#53d772</color>
+    <color name="headerHOF">#48c3d2</color>
+    <color name="headerSettings">#ff9a42</color>
+
+    <color name="textPrimary">#565656</color>
+    <color name="textSecondary">#959595</color>
+    <color name="textColorTertiary">#898989</color>
+    <color name="textGreen">#8dc73f</color>
+    <color name="textBlue">#01adef</color>
+    <color name="textOrange">#f7941d</color>
+
+
+    <color name="red">#ec1d25</color>
+
+
 </resources>

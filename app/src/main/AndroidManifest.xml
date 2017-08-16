@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-feature
         android:name="android.software.device_admin"
@@ -18,23 +20,13 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
-        <activity
-            android:name=".activity.MainActivity"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".activity.PinActivity"
-            android:screenOrientation="portrait" />
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
 
         <receiver android:name=".receiver.LockReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.USER_UNLOCKED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
         </receiver>
         <receiver
@@ -49,12 +41,35 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".activity.NominatePinActivity">
+        <activity
+            android:name=".activity.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.PinActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.PinNominateActivity" />
+        <activity android:name=".activity.SettingsActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
-        <activity android:name=".activity.SettingsActivity" />
-        <activity android:name=".activity.HelpActivity"></activity>
+        <activity android:name=".activity.HelpActivity" />
+        <activity android:name=".activity.TermsAndConditionActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.SignupActivity" />
+        <activity android:name=".activity.DashboardActivity" />
+        <activity android:name=".activity.LoginActivity" />
+        <activity android:name=".activity.ForgotPasswordActivity" />
+        <activity android:name=".activity.PinConfirmActivity" />
+        <activity android:name=".activity.PinChangeActivity" />
+        <activity android:name=".activity.BackgroundChangeActivity"></activity>
     </application>
 
 </manifest>

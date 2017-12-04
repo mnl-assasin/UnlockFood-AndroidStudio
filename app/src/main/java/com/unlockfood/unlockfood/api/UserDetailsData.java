@@ -33,6 +33,9 @@ public class UserDetailsData {
     @SerializedName("level")
     @Expose
     private String level;
+    @SerializedName("level_badge")
+    @Expose
+    private String levelBadge;
     @SerializedName("people_fed")
     @Expose
     private double peopleFed;
@@ -76,6 +79,10 @@ public class UserDetailsData {
         return level;
     }
 
+    public String getLevelBadge() {
+        return levelBadge;
+    }
+
     public double getPeopleFed() {
         return peopleFed;
     }
@@ -84,7 +91,7 @@ public class UserDetailsData {
         return totalPeopleFed;
     }
 
-    public UserDetailsData(Integer id, String name, String firstName, String lastName, String username, String socialType, String profilePictureUrl, int points, String level, double peopleFed, double totalPeopleFed) {
+    public UserDetailsData(Integer id, String name, String firstName, String lastName, String username, String socialType, String profilePictureUrl, int points, String level, String levelBadge, double peopleFed, double totalPeopleFed) {
         this.id = id;
         this.name = name;
         this.firstName = firstName;
@@ -92,6 +99,7 @@ public class UserDetailsData {
         this.username = username;
         this.socialType = socialType;
         this.profilePictureUrl = profilePictureUrl;
+        this.levelBadge = levelBadge;
         this.points = points;
         this.level = level;
         this.peopleFed = peopleFed;

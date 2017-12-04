@@ -12,7 +12,7 @@
     tools:context="com.unlockfood.unlockfood.activity.PinActivity">
 
     <ImageView
-        android:id="@+id/background"
+        android:id="@+id/ivImg"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

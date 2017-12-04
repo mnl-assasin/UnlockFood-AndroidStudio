@@ -56,8 +56,6 @@ public class RewardsFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         initData();
-
-
         return view;
     }
 
@@ -129,6 +127,6 @@ public class RewardsFragment extends Fragment {
             return 10;
         }
 
-        return 0;
+        return 10;
     }
 }

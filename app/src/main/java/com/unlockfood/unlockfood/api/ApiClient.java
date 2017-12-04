@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
 
-    public static final String BASE_URL = "http://unlockfood.com/admin-back-end/public/api/";
+    public static final String BASE_URL = "https://unlockfood.com/admin-back-end/public/api/";
     private static Retrofit retrofit = null;
 
 

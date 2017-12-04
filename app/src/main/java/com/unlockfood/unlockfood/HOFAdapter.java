@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.unlockfood.unlockfood.api.HallOfFameData;
 
 import java.util.List;
@@ -61,8 +62,18 @@ public class HOFAdapter extends BaseAdapter {
             view.setTag(holder);
         }
         HallOfFameData item = items.get(i);
+
+        Picasso.with(ctx).load(R.drawable.img_profile).into(holder.civProfile);
         holder.tvName.setText(item.getFirstName() + " " + item.getLastName());
         holder.tvPeopleFed.setText(String.valueOf(item.getPeopleFed()));
+
+        String profilePic = item.getProfilePictureUrl();
+        if (profilePic != null) {
+            if (!profilePic.equals("")) {
+                Picasso.with(ctx).load(item.getProfilePictureUrl()).error(R.drawable.img_profile).into(holder.civProfile);
+            }
+        }
+
         return view;
     }
 

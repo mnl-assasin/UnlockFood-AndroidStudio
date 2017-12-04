@@ -46,7 +46,7 @@ public class ForgotPasswordActivity extends BaseActivity {
             ToastBuilder.shortToast(this, "Please enter your email");
         else {
 
-            startProgressdialog("Resetting your password...");
+            startProgressDialog("Resetting your password...");
             ApiInterface api = ApiClient.getClient().create(ApiInterface.class);
             Call<Void> call = api.postResetPassword(new ResetPasswordRequest(email));
             call.enqueue(new Callback<Void>() {

@@ -1,19 +1,27 @@
 {
   "project_info": {
-    "project_number": "867472302233",
-    "project_id": "firebase-unlockfood"
+    "project_number": "103892570538",
+    "project_id": "unlockfood-175103"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:867472302233:android:c4c7cd7ab3c8656b",
+        "mobilesdk_app_id": "1:103892570538:android:c4c7cd7ab3c8656b",
         "android_client_info": {
           "package_name": "com.unlockfood.unlockfood"
         }
       },
       "oauth_client": [
         {
-          "client_id": "867472302233-uth5ba7eru8pf8gmmpps3b0rf954s50b.apps.googleusercontent.com",
+          "client_id": "103892570538-uggoe4c23d9ubfrmktjh9b3s67r34qvl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.unlockfood.unlockfood",
+            "certificate_hash": "46e14c961deca62b7e3bedf327a6b72e4e99d208"
+          }
+        },
+        {
+          "client_id": "103892570538-vh1a2fnptf7mvekaor1vmabg1gf73sbm.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.unlockfood.unlockfood",
@@ -21,13 +29,13 @@
           }
         },
         {
-          "client_id": "867472302233-1k9b9q5a3qgi52efj98vbng57b4g0nnb.apps.googleusercontent.com",
+          "client_id": "103892570538-n72vjfrj0475gl1nh478d41pc0jjfgqa.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD7QGEAxyNgI0U4OP7I3AfkydFh5gUJ2cU"
+          "current_key": "AIzaSyAHyPPBSWNDyAZTGyMc3h-p9kDrHyYTBe4"
         }
       ],
       "services": {

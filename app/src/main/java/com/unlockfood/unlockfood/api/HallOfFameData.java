@@ -20,6 +20,8 @@ public class HallOfFameData {
     @SerializedName("username")
     @Expose
     private String username;
+    @SerializedName("profile_picture_url")
+    private String profilePictureUrl;
     @SerializedName("points")
     @Expose
     private int points;
@@ -37,72 +39,39 @@ public class HallOfFameData {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
     public String getLastName() {
         return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public String getProfilePictureUrl() {
+        return profilePictureUrl;
     }
 
     public int getPoints() {
         return points;
     }
 
-    public void setPoints(int points) {
-        this.points = points;
-    }
-
     public String getLevel() {
         return level;
-    }
-
-    public void setLevel(String level) {
-        this.level = level;
     }
 
     public double getPeopleFed() {
         return peopleFed;
     }
 
-    public void setPeopleFed(int peopleFed) {
-        this.peopleFed = peopleFed;
-    }
-
     public double getTotalPeopleFed() {
         return totalPeopleFed;
     }
-
-    public void setTotalPeopleFed(int totalPeopleFed) {
-        this.totalPeopleFed = totalPeopleFed;
-    }
-
 }

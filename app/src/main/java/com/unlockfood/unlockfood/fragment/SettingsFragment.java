@@ -1,11 +1,18 @@
 package com.unlockfood.unlockfood.fragment;
 
 
+import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +20,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.unlockfood.unlockfood.R;
@@ -21,14 +30,15 @@ import com.unlockfood.unlockfood.activity.MainActivity;
 import com.unlockfood.unlockfood.api.ApiClient;
 import com.unlockfood.unlockfood.api.ApiInterface;
 import com.unlockfood.unlockfood.api.ProfileUpdateRequest;
+import com.unlockfood.unlockfood.api.UpdatePasswordRequest;
 import com.unlockfood.unlockfood.api.UserDetailsData;
 import com.unlockfood.unlockfood.api.UserDetailsResponse;
 import com.unlockfood.unlockfood.builder.ToastBuilder;
 import com.unlockfood.unlockfood.data.EZSharedPreferences;
 import com.unlockfood.unlockfood.utils.FileUtils;
+import com.unlockfood.unlockfood.utils.Util;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 
 import butterknife.Bind;
@@ -48,6 +58,7 @@ import static android.app.Activity.RESULT_OK;
  */
 public class SettingsFragment extends BaseFragment {
 
+    String TAG = SettingsFragment.class.getSimpleName();
 
     @Bind(R.id.textView)
     TextView textView;
@@ -73,6 +84,8 @@ public class SettingsFragment extends BaseFragment {
     EditText etConfirmPw;
     @Bind(R.id.btnChangePW)
     Button btnChangePW;
+    @Bind(R.id.containerPassword)
+    LinearLayout containerPassword;
     @Bind(R.id.btnLogout)
     Button btnLogout;
 
@@ -80,6 +93,12 @@ public class SettingsFragment extends BaseFragment {
 
     int PICK_IMAGE = 100;
     String selectedImage = "";
+
+    private static final int PERMISSION_CALLBACK_CONSTANT = 100;
+    private static final int REQUEST_PERMISSION_SETTING = 101;
+    String[] REQUIRED_PERMISSIONS = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE};
+
     Uri imageUri = null;
 
     String id;
@@ -95,11 +114,141 @@ public class SettingsFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
         ButterKnife.bind(this, view);
 
-        initData();
+        initPermission();
+
+        api = ApiClient.getClient().create(ApiInterface.class);
+
+        if (Util.isInternetAvailable(getActivity()))
+            initData();
+        else
+            ToastBuilder.shortToast(getActivity(), "Please connect to internet and try again");
         return view;
     }
 
+    private void initPermission() {
+        if (ActivityCompat.checkSelfPermission(getActivity(), REQUIRED_PERMISSIONS[0]) != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(getActivity(), REQUIRED_PERMISSIONS[1]) != PackageManager.PERMISSION_GRANTED
+//                || ActivityCompat.checkSelfPermission(this, REQUIRED_PERMISSIONS[2]) != PackageManager.PERMISSION_GRANTED
+                ) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), REQUIRED_PERMISSIONS[0])
+                    || ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), REQUIRED_PERMISSIONS[1])
+//                    || ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), REQUIRED_PERMISSIONS[2])
+                    ) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Need Multiple Permissions");
+                builder.setMessage("This app needs read and write storage permissions.");
+                builder.setPositiveButton("Grant", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                        ActivityCompat.requestPermissions(getActivity(), REQUIRED_PERMISSIONS, PERMISSION_CALLBACK_CONSTANT);
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                builder.show();
+            } else if (EZSharedPreferences.getManifestWriteStorage(getActivity())) { // WRITE STORAGE PERMISSION
+                //Previously Permission Request was cancelled with 'Dont Ask Again',
+                // Redirect to Settings after showing Information about why you need the permission
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Need Multiple Permissions");
+                builder.setMessage("This app needs read and write storage permissions.");
+                builder.setPositiveButton("Grant", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+//                        sentToSettings = true;
+                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                        Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
+                        intent.setData(uri);
+                        startActivityForResult(intent, REQUEST_PERMISSION_SETTING);
+                        Toast.makeText(getActivity(), "Go to Permissions to Grant read and write storage", Toast.LENGTH_LONG).show();
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                builder.show();
+            } else {
+                //just request the permission
+                ActivityCompat.requestPermissions(getActivity(), REQUIRED_PERMISSIONS, PERMISSION_CALLBACK_CONSTANT);
+            }
+
+            Log.d(TAG, "Permissions required?");
+//            txtPermissions.setText("Permissions Required");
+//            SharedPreferences.Editor editor = permissionStatus.edit();
+//            editor.putBoolean(REQUIRED_PERMISSIONS[0],true);
+//            editor.commit();
+        } else {
+
+            Log.d(TAG, "Proceed to after permission process");
+//            initData();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        final String mTAG = "onRequestPermission: ";
+        if (requestCode == PERMISSION_CALLBACK_CONSTANT) {
+            //check if all permissions are granted
+            boolean allgranted = false;
+            for (int i = 0; i < grantResults.length; i++) {
+                if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                    allgranted = true;
+
+                } else {
+                    allgranted = false;
+                    break;
+                }
+            }
+
+
+            if (allgranted) {
+                Log.d(TAG, mTAG + "Proceed to after permission process");
+                EZSharedPreferences.setManifestWriteStorage(getActivity(), true);
+//                proceedAfterPermission();
+//                initData();
+            } else if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), REQUIRED_PERMISSIONS[0])
+                    || ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), REQUIRED_PERMISSIONS[1])) {
+//                    || ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), REQUIRED_PERMISSIONS[2])) {
+                //txtPermissions.setText("Permissions Required");
+                Log.d(TAG, mTAG + "All Permissions required");
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Need Multiple Permissions");
+                builder.setMessage("This app needs read and write storage permissions.");
+                builder.setPositiveButton("Grant", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                        ActivityCompat.requestPermissions(getActivity(), REQUIRED_PERMISSIONS, PERMISSION_CALLBACK_CONSTANT);
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                builder.show();
+            } else {
+                Toast.makeText(getActivity(), "Unable to get Permission", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+
     private void initData() {
+
 
         UserDetailsData details = EZSharedPreferences.getUserDetails(getActivity());
         id = String.valueOf(details.getId());
@@ -107,10 +256,17 @@ public class SettingsFragment extends BaseFragment {
         tvName.setText(details.getFirstName() + " " + details.getLastName());
         etFName.setText(details.getFirstName());
         etLName.setText(details.getLastName());
-        Picasso.with(getActivity()).load(details.getProfilePictureUrl()).error(R.drawable.img_profile).into(ivProfile);
+
+        String path = details.getProfilePictureUrl();
+        if (path != null)
+            if (!path.equals(""))
+                Picasso.with(getActivity()).load(details.getProfilePictureUrl()).error(R.drawable.img_profile).into(ivProfile);
 
 //        ivProfile
 //        etEmail.setText(details.get);
+        String social = details.getSocialType();
+        if (social.equals("manual"))
+            containerPassword.setVisibility(View.VISIBLE);
 
     }
 
@@ -131,6 +287,11 @@ public class SettingsFragment extends BaseFragment {
                 updateAccount();
                 break;
             case R.id.btnChangePW:
+                Log.d(TAG, "CHANGE PASS");
+                if (Util.isInternetAvailable(getActivity()))
+                    changePass();
+                else
+                    ToastBuilder.shortToast(getActivity(), "Please connect to internet and try again");
                 break;
             case R.id.btnLogout:
                 EZSharedPreferences.setLogin(getActivity(), false);
@@ -140,35 +301,60 @@ public class SettingsFragment extends BaseFragment {
         }
     }
 
+    private void changePass() {
+        String oldPass = etOldPw.getText().toString().trim();
+        String newPass = etNewPw.getText().toString().trim();
+        String confirmPass = etConfirmPw.getText().toString().trim();
+
+        boolean isValid = true;
+        if (oldPass.equals("")) {
+            isValid = false;
+            ToastBuilder.shortToast(getActivity(), "Please enter your current password");
+        } else if (newPass.equals("")) {
+            isValid = false;
+            ToastBuilder.shortToast(getActivity(), "Please enter a new password");
+        } else if (confirmPass.equals("")) {
+            isValid = false;
+            ToastBuilder.shortToast(getActivity(), "Please confirm your new password");
+        }
+
+        if (!newPass.equals(confirmPass)) {
+            isValid = false;
+            ToastBuilder.shortToast(getActivity(), "Your new password does not match");
+        }
+
+        if (isValid) {
+            updatePassword(oldPass, newPass);
+        }
+
+    }
+
+    private void updatePassword(String oldPass, String newPass) {
+        startProgressdialog("Updating password...");
+        Call<Void> call = api.postUpdatePassword(id, new UpdatePasswordRequest(oldPass, newPass));
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                stopProgressDialog();
+                if (response.isSuccessful()) {
+                    ToastBuilder.shortToast(getActivity(), "Password updated successfully!");
+                } else {
+                    Util.showResponseError(getActivity(), response);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                stopProgressDialog();
+                ToastBuilder.shortToast(getActivity(), t.toString());
+            }
+        });
+    }
+
     private void updateAccount() {
-
-        api = ApiClient.getClient().create(ApiInterface.class);
-
         if (imageUri != null) {
             startProgressdialog("Uploading profile picture...");
             MultipartBody.Part body = prepareFilePart(getActivity(), "profile_picture", imageUri);
-
-//            Call<Void> call = api.postPicture(id, body);
-//            call.enqueue(new Callback<Void>() {
-//                @Override
-//                public void onResponse(Call<Void> call, Response<Void> response) {
-//                    if (response.isSuccessful()) {
-//                        stopProgressDialog();
-//                        ToastBuilder.shortToast(getActivity(), "Profile picture save");
-//                    } else {
-//                        ToastBuilder.shortToast(getActivity(), "Something went wrong, please try again");
-//                    }
-//                    updateName();
-//                }
-//
-//                @Override
-//                public void onFailure(Call<Void> call, Throwable t) {
-//                    stopProgressDialog();
-//                    ToastBuilder.shortToast(getActivity(), "Something went wrong, please try again");
-//                    updateName();
-//                }
-//            });
-
             Call<UserDetailsResponse> call = api.postPicture(id, body);
             call.enqueue(new Callback<UserDetailsResponse>() {
                 @Override
@@ -180,7 +366,7 @@ public class SettingsFragment extends BaseFragment {
                         EZSharedPreferences.setUserDetails(getActivity(), response.body().getData());
                         ToastBuilder.shortToast(getActivity(), "Profile picture save");
                     } else {
-                        ToastBuilder.shortToast(getActivity(), "Something went wrong, please try again");
+                        Util.showResponseError(getActivity(), response);
                     }
                 }
 
@@ -188,7 +374,7 @@ public class SettingsFragment extends BaseFragment {
                 public void onFailure(Call<UserDetailsResponse> call, Throwable t) {
                     stopProgressDialog();
                     updateName();
-                    ToastBuilder.shortToast(getActivity(), "Something went wrong, please try again");
+                    ToastBuilder.shortToast(getActivity(), t.toString());
                 }
             });
 
@@ -228,12 +414,7 @@ public class SettingsFragment extends BaseFragment {
                         EZSharedPreferences.setUserDetails(getActivity(), response.body().getData());
                         ToastBuilder.shortToast(getActivity(), "Profile changed successfully!");
                     } else {
-                        try {
-                            Log.d("mykSettings", response.errorBody().string());
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        ToastBuilder.shortToast(getActivity(), "Something went wrong, please try again");
+                        Util.showResponseError(getActivity(), response);
                     }
                 }
 

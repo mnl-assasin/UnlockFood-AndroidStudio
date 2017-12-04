@@ -1,7 +1,5 @@
 package com.unlockfood.unlockfood.activity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -28,15 +25,22 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.OptionalPendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.unlockfood.unlockfood.R;
 import com.unlockfood.unlockfood.api.ApiClient;
 import com.unlockfood.unlockfood.api.ApiInterface;
 import com.unlockfood.unlockfood.api.LoginEmail;
 import com.unlockfood.unlockfood.api.LoginSocialMedia;
 import com.unlockfood.unlockfood.api.RegisterSocialMedia;
+import com.unlockfood.unlockfood.api.UserDetailsData;
 import com.unlockfood.unlockfood.api.UserDetailsResponse;
+import com.unlockfood.unlockfood.builder.ToastBuilder;
 import com.unlockfood.unlockfood.data.Const;
 import com.unlockfood.unlockfood.data.EZSharedPreferences;
+import com.unlockfood.unlockfood.widgets.ButtonMyriad;
+import com.unlockfood.unlockfood.widgets.TextViewMyriad;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -51,9 +55,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LoginActivity extends BlackActivity implements GoogleApiClient.OnConnectionFailedListener {
+public class LoginActivity extends BaseActivity implements GoogleApiClient.OnConnectionFailedListener {
 
-    String TAG = LoginActivity.class.getSimpleName();
+    private static final String TAG = LoginActivity.class.getSimpleName();
 
     @Bind(R.id.etEmail)
     EditText etEmail;
@@ -62,23 +66,22 @@ public class LoginActivity extends BlackActivity implements GoogleApiClient.OnCo
     @Bind(R.id.btnSigin)
     Button btnSigin;
     @Bind(R.id.tvForgotPw)
-    TextView tvForgotPw;
-    @Bind(R.id.containerFB)
+    TextViewMyriad tvForgotPw;
+    @Bind(R.id.fbLogin)
     LinearLayout containerFB;
-    @Bind(R.id.containerLogout)
+    @Bind(R.id.fbLogout)
     LinearLayout containerLogout;
     @Bind(R.id.btnGoogleSignIn)
     SignInButton btnGoogleSignIn;
     @Bind(R.id.googleLogout)
     LinearLayout googleLogout;
     @Bind(R.id.btnSignup)
-    Button btnSignup;
+    ButtonMyriad btnSignup;
 
+    ApiInterface api;
+    GoogleApiClient mGoogleApiClient;
     CallbackManager callbackManager;
 
-    int RC_SIGN_IN = 007;
-    GoogleApiClient mGoogleApiClient;
-    ApiInterface api;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,62 +90,63 @@ public class LoginActivity extends BlackActivity implements GoogleApiClient.OnCo
         ButterKnife.bind(this);
 
         initData();
+        initGoogleLogin();
         initFBLogin();
+
     }
 
     private void initData() {
 
         api = ApiClient.getClient().create(ApiInterface.class);
+//        logoutGoogle();
 
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
+    }
+
+
+    private void initGoogleLogin() {
+        GoogleSignInOptions gso = new GoogleSignInOptions
+                .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this, this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
-
-
+                .enableAutoManage(this, this).addApi(Auth.GOOGLE_SIGN_IN_API, gso).build();
     }
 
     private void initFBLogin() {
         callbackManager = CallbackManager.Factory.create();
-
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Log.d(TAG, "onSuccess");
                 String userId = loginResult.getAccessToken().getUserId();
                 loginUsingFacebook(userId);
+                updateFacebookUI();
+
+
             }
+
 
             @Override
             public void onCancel() {
-                Log.d(TAG, "Cancel");
+
             }
 
             @Override
             public void onError(FacebookException error) {
-//                Log.d(TAG, error.getCause().toString());
-                Log.d(TAG, error.getMessage());
-
+                Log.d(TAG, error.toString());
+                error.printStackTrace();
             }
         });
-        checkLogin();
     }
 
     private void loginUsingFacebook(String userId) {
         Log.d(TAG, "login using facebook: " + userId);
-
-        startProgessDialog("Logging in...");
+        startProgressDialog("Logging in...");
         Call<UserDetailsResponse> call = api.loginSocialMedia(new LoginSocialMedia(Const.SOCIAL_FACEBOOK, userId));
         call.enqueue(new Callback<UserDetailsResponse>() {
             @Override
             public void onResponse(Call<UserDetailsResponse> call, Response<UserDetailsResponse> response) {
                 if (response.isSuccessful()) {
                     Log.d(TAG, "Successful");
-                    saveUserDetails(Const.LOGIN_FACEBOOK, response.body());
+                    saveUserDetails(response.body().getData());
                 } else {
                     int code = response.code();
                     Log.d(TAG, "error code: " + code);
@@ -159,7 +163,6 @@ public class LoginActivity extends BlackActivity implements GoogleApiClient.OnCo
                 Log.d(TAG, "onFailure Facebook login");
             }
         });
-
     }
 
     private void requestFbProfile() {
@@ -179,11 +182,9 @@ public class LoginActivity extends BlackActivity implements GoogleApiClient.OnCo
         request.executeAsync();
     }
 
-    String response;
-
     private void processFBResponse(String response) {
 
-        this.response = response;
+//        this.response = response;
 
         try {
             JSONObject jsonObject = new JSONObject(response);
@@ -195,83 +196,47 @@ public class LoginActivity extends BlackActivity implements GoogleApiClient.OnCo
             String picture = jsonObject.getJSONObject("picture").getJSONObject("data").getString("url");
             EZSharedPreferences.setPicture(this, picture);
             Log.d(TAG, "Picture: " + picture);
-            registerUsingFacebook(username, fName, lName, email, picture);
+            registerSocial(Const.SOCIAL_FACEBOOK, username, fName, lName, email, picture);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    private void registerUsingFacebook(String username, String fName, String lName, String email, String picture) {
 
-        Call<UserDetailsResponse> call = api.registerSocialMedia(new RegisterSocialMedia(Const.SOCIAL_FACEBOOK, username, fName, lName, email, picture));
-        call.enqueue(new Callback<UserDetailsResponse>() {
-            @Override
-            public void onResponse(Call<UserDetailsResponse> call, Response<UserDetailsResponse> response) {
-                Log.d(TAG, "onResponse Facebook register");
-                if (response.isSuccessful()) {
-                    saveUserDetails(Const.LOGIN_FACEBOOK, response.body());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UserDetailsResponse> call, Throwable t) {
-                Log.d(TAG, "onFailure Facebook register");
-            }
-        });
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
 
-    private void saveUserDetails(int loginType, UserDetailsResponse body) {
-        Log.d(TAG, "saveUserDetails");
-        stopProgressDialog();
-        EZSharedPreferences.setLogin(this, true);
-        EZSharedPreferences.setLoginType(this, loginType);
-        EZSharedPreferences.setUserDetails(this, body.getData());
-        startActivity(new Intent(this, DashboardActivity.class));
-    }
-
-    private void checkLogin() {
-        AccessToken accessToken = AccessToken.getCurrentAccessToken();
-
-        if (accessToken != null) {
-            // naka login;
-            containerFB.setVisibility(View.GONE);
-            containerLogout.setVisibility(View.VISIBLE);
-        } else {
-            // hindi naka login;
-            containerFB.setVisibility(View.VISIBLE);
-            containerLogout.setVisibility(View.GONE);
-        }
-    }
-
-    @OnClick({R.id.btnSigin, R.id.tvForgotPw, R.id.containerFB, R.id.containerLogout, R.id.btnSignup, R.id.btnGoogleSignIn})
+    @OnClick({R.id.btnSigin, R.id.fbLogin, R.id.fbLogout, R.id.btnGoogleSignIn, R.id.googleLogout, R.id.btnSignup, R.id.tvForgotPw})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnSigin:
-                onSigninClick();
+                onSignInClick();
+                break;
+            case R.id.fbLogin:
+                signInFB();
+                break;
+            case R.id.fbLogout:
+                logoutFB();
+                break;
+            case R.id.btnGoogleSignIn:
+                googleSignIn();
+                break;
+            case R.id.googleLogout:
+                logoutGoogle();
+                break;
+            case R.id.btnSignup:
+                startActivity(new Intent(this, SignupActivity.class));
                 break;
             case R.id.tvForgotPw:
                 startActivity(new Intent(this, ForgotPasswordActivity.class));
                 break;
-            case R.id.containerFB:
-                loginFacebook();
-                break;
-            case R.id.containerLogout:
-                logoutFacebook();
-                break;
-//            case R.id.containerGooglePlus:
-//                break;
-            case R.id.btnSignup:
-                startActivity(new Intent(LoginActivity.this, SignupActivity.class));
-                break;
-
-            case R.id.btnGoogleSignIn:
-                signIn();
         }
     }
 
-    private void onSigninClick() {
+    private void onSignInClick() {
         String email = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
         boolean isValid = true;
@@ -290,14 +255,14 @@ public class LoginActivity extends BlackActivity implements GoogleApiClient.OnCo
     }
 
     private void loginUsingEmail(String email, String password) {
-        startProgessDialog("Logging in...");
+        startProgressDialog("Logging in...");
         Log.d(TAG, "email: " + email + " : password: " + password);
         Call<UserDetailsResponse> call = api.postEmail(new LoginEmail(email, password));
         call.enqueue(new Callback<UserDetailsResponse>() {
             @Override
             public void onResponse(Call<UserDetailsResponse> call, Response<UserDetailsResponse> response) {
                 if (response.isSuccessful()) {
-                    saveUserDetails(Const.LOGIN_MANUAL, response.body());
+                    saveUserDetails(response.body().getData());
                 } else {
                     stopProgressDialog();
                     int code = response.code();
@@ -305,7 +270,7 @@ public class LoginActivity extends BlackActivity implements GoogleApiClient.OnCo
 
                     if (Const.NOT_FOUND == code) {
                         // REGISTER FACEBOOK;
-                        showRegisterDialog();
+                        ToastBuilder.shortToast(getApplicationContext(), "Incorrect username or password, please try again");
                     }
                 }
             }
@@ -319,31 +284,12 @@ public class LoginActivity extends BlackActivity implements GoogleApiClient.OnCo
         });
     }
 
-    private void showRegisterDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Invalid Login Credentials");
-        builder.setMessage("Did you forgot your password or trying to sign up?");
-        builder.setNegativeButton("Forgot Password", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-            }
-        }).setNeutralButton("Sign up", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                startActivity(new Intent(LoginActivity.this, SignupActivity.class));
-                finish();
-            }
-        }).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                etEmail.setText("");
-                etPassword.setText("");
-            }
-        }).show();
+    private void signInFB() {
+        Collection<String> permissions = Arrays.asList("public_profile", "email");
+        LoginManager.getInstance().logInWithReadPermissions(this, permissions);
     }
 
-    public void logoutFacebook() {
+    private void logoutFB() {
         if (AccessToken.getCurrentAccessToken() == null) {
             return; // already logged out
         }
@@ -355,15 +301,25 @@ public class LoginActivity extends BlackActivity implements GoogleApiClient.OnCo
                 LoginManager.getInstance().logOut();
                 Log.d(TAG, "Logout successful");
 
-                checkLogin();
+                updateFacebookUI();
 
             }
         }).executeAsync();
     }
 
-    private void loginFacebook() {
-        Collection<String> permissions = Arrays.asList("public_profile", "email");
-        LoginManager.getInstance().logInWithReadPermissions(this, permissions);
+    private void googleSignIn() {
+        Intent intent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+        startActivityForResult(intent, Const.REQUEST_GOOGLE);
+    }
+
+    private void logoutGoogle() {
+        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+                new ResultCallback<Status>() {
+                    @Override
+                    public void onResult(Status status) {
+                        updateGoogleUI(false);
+                    }
+                });
     }
 
     @Override
@@ -372,53 +328,152 @@ public class LoginActivity extends BlackActivity implements GoogleApiClient.OnCo
 
         callbackManager.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == RC_SIGN_IN) {
+        if (requestCode == Const.REQUEST_GOOGLE && resultCode == RESULT_OK) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
-        }
-
-        checkLogin();
-    }
-
-    private void handleSignInResult(GoogleSignInResult result) {
-        Log.d(TAG, "handleSignInResult:" + result.isSuccess());
-        if (result.isSuccess()) {
-            // Signed in successfully, show authenticated UI.
-            GoogleSignInAccount acct = result.getSignInAccount();
-
-            Log.e(TAG, "display name: " + acct.getDisplayName());
-
-            String personName = acct.getDisplayName();
-            String personPhotoUrl = acct.getPhotoUrl().toString();
-            String email = acct.getEmail();
-
-            Log.e(TAG, "Name: " + personName + ", email: " + email
-                    + ", Image: " + personPhotoUrl);
-
-//            txtName.setText(personName);
-//            txtEmail.setText(email);
-//            Glide.with(getApplicationContext()).load(personPhotoUrl)
-//                    .thumbnail(0.5f)
-//                    .crossFade()
-//                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                    .into(imgProfilePic);
-//
-//            updateUI(true);
-        } else {
-            // Signed out, show unauthenticated UI.
-//            updateUI(false);
         }
     }
 
     @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+    public void onStart() {
+        super.onStart();
 
+        OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
+        if (opr.isDone()) {
+            // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
+            // and the GoogleSignInResult will be available instantly.
+            Log.d(TAG, "Got cached sign-in");
+            GoogleSignInResult result = opr.get();
+            handleSignInResult(result);
+        } else {
+            // If the user has not previously signed in on this device or the sign-in has expired,
+            // this asynchronous branch will attempt to sign in the user silently.  Cross-device
+            // single sign-on will occur in this branch.
+            startProgressDialog("processing...");
+            opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
+                @Override
+                public void onResult(GoogleSignInResult googleSignInResult) {
+                    stopProgressDialog();
+                    handleSignInResult(googleSignInResult);
+                }
+            });
+        }
+    }
+
+    private void handleSignInResult(GoogleSignInResult result) {
+        if (result.isSuccess()) {
+            // Signed in successfully, show authenticated UI.
+            GoogleSignInAccount acct = result.getSignInAccount();
+            String username = acct.getId();
+            String firstName = acct.getGivenName();
+            String lastName = acct.getFamilyName();
+            String email = acct.getEmail();
+            String picture = "";
+            if (acct.getPhotoUrl() != null)
+                picture = acct.getPhotoUrl().toString();
+
+            loginUsingGoogle(username, result);
+
+
+            updateGoogleUI(true);
+        } else {
+            // Signed out, show unauthenticated UI.
+            updateGoogleUI(false);
+        }
+    }
+
+    private void loginUsingGoogle(String userId, final GoogleSignInResult result) {
+        Log.d(TAG, "UserId: " + userId);
+        startProgressDialog("Logging in...");
+        Call<UserDetailsResponse> call = api.loginSocialMedia(new LoginSocialMedia(Const.SOCIAL_GOOGLE, userId));
+        call.enqueue(new Callback<UserDetailsResponse>() {
+            @Override
+            public void onResponse(Call<UserDetailsResponse> call, Response<UserDetailsResponse> response) {
+                if (response.isSuccessful()) {
+                    saveUserDetails(response.body().getData());
+                } else {
+                    if (response.code() == Const.NOT_FOUND)
+                        requestGoogleProfile(result);
+                }
+            }
+
+
+            @Override
+            public void onFailure(Call<UserDetailsResponse> call, Throwable t) {
+                stopProgressDialog();
+                Log.d(TAG, "onFailure: " + t.toString());
+            }
+        });
+    }
+
+    private void requestGoogleProfile(GoogleSignInResult result) {
+        Log.d(TAG, "requestGoogleProfile");
+        GoogleSignInAccount acct = result.getSignInAccount();
+        String username = acct.getId();
+        String firstName = acct.getGivenName();
+        String lastName = acct.getFamilyName();
+        String email = acct.getEmail();
+        String picture = "";
+        if (acct.getPhotoUrl() != null)
+            picture = acct.getPhotoUrl().toString();
+
+        registerSocial(Const.SOCIAL_GOOGLE, username, firstName, lastName, email, picture);
 
     }
 
+    private void registerSocial(String socialType, String username, String firstName, String lastName, String email, String picture) {
 
-    private void signIn() {
-        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-        startActivityForResult(signInIntent, RC_SIGN_IN);
+        Call<UserDetailsResponse> call = api.registerSocialMedia(new RegisterSocialMedia(socialType, username, firstName, lastName, email, picture));
+        call.enqueue(new Callback<UserDetailsResponse>() {
+            @Override
+            public void onResponse(Call<UserDetailsResponse> call, Response<UserDetailsResponse> response) {
+                if (response.isSuccessful())
+                    saveUserDetails(response.body().getData());
+            }
+
+            @Override
+            public void onFailure(Call<UserDetailsResponse> call, Throwable t) {
+                stopProgressDialog();
+                Log.d(TAG, "onFailure: " + t.toString());
+            }
+        });
     }
+
+    private void saveUserDetails(UserDetailsData data) {
+        Log.d(TAG, "Save user details");
+        stopProgressDialog();
+        EZSharedPreferences.setLogin(this, true);
+        EZSharedPreferences.setUserDetails(this, data);
+        startActivity(new Intent(this, DashboardActivity.class));
+
+    }
+
+    private void updateFacebookUI() {
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+
+        if (accessToken != null) {
+            // naka login;
+            containerFB.setVisibility(View.GONE);
+            containerLogout.setVisibility(View.VISIBLE);
+//            logoutFB();
+        } else {
+            // hindi naka login;
+            containerFB.setVisibility(View.VISIBLE);
+            containerLogout.setVisibility(View.GONE);
+        }
+    }
+
+    private void updateGoogleUI(boolean b) {
+        Log.d(TAG, "updateGoogleUI");
+        if (b) {
+            btnGoogleSignIn.setVisibility(View.GONE);
+            googleLogout.setVisibility(View.VISIBLE);
+            logoutGoogle();
+        } else {
+            btnGoogleSignIn.setVisibility(View.VISIBLE);
+            googleLogout.setVisibility(View.GONE);
+
+        }
+    }
+
 }

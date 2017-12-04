@@ -28,6 +28,10 @@
     <string name="introduction">Introduction</string>
 
     <string name="introduction_desc">Welcome to our application (the “App“). This App is published by or on behalf of Unlock Food by Magick Multimedia LLC (“Magick” or “We” or “Us“) a company registered in British West Indies and can be contacted at P.O. Box 294, The Valley, Anguilla, British West Indies.\n\nBy downloading or otherwise accessing the App you agree to be bound by the following terms and conditions (“Terms“) and our privacy policy and our cookies policy. If you have any queries about the App or these Terms, you can contact Us by any of the means set out in paragraph 10 of these Terms. If you do not agree with these Terms, you should stop using the App immediately.</string>
+    <string name="device_admin">Activate Device Admin Page Content</string>
+    <string name="device_admin_desc">- Activating this administrator will allow the app Unlockfood to perform the following operations:\n\n
+    •Lock the screen - Control how and when the screen locks\n
+    •Change the screen-unlock password</string>
     <string name="general_rules">General Rules Relating to Conduct</string>
     <string name="general_rules_desc"> The App is made available for your own, personal use. The App must not be used for any commercial purpose whatsoever or for any illegal or unauthorised purpose. When you use the App you must comply with all/ any applicable international laws, including the local laws in your country of residence (together referred to as “Applicable Laws”).\n\nYou agree that when using the App you will comply with all Applicable Laws and these Terms. In particular, but without limitation, you agree not to:</string>
     <string name="grd1">Use the App in any unlawful manner or in a manner which promotes or encourages illegal activity including (without limitation) copyright infringement; or </string>

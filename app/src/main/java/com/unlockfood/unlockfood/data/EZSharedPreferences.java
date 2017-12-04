@@ -29,6 +29,7 @@ public class EZSharedPreferences {
     private final static String KEY_PROFILE_PICTURE = "profilePicture";
     private final static String KEY_POINTS = "points";
     private final static String KEY_LEVEL = "level";
+    private final static String KEY_LEVEL_BADGE = "levelBadge";
     private final static String KEY_PEOPLE_FED = "peopleFed";
     private final static String KEY_TOTAL_PEOPLE_FED = "totalPeopleFed";
 
@@ -83,12 +84,17 @@ public class EZSharedPreferences {
         String profilePicture = getSharedPref(ctx).getString(KEY_PROFILE_PICTURE, null);
         int points = getSharedPref(ctx).getInt(KEY_POINTS, 0);
         String level = getSharedPref(ctx).getString(KEY_LEVEL, null);
+        String levelBadge = getSharedPref(ctx).getString(KEY_LEVEL_BADGE, null);
         int peopleFed = getSharedPref(ctx).getInt(KEY_PEOPLE_FED, 0);
         int totalPeopleFed = getSharedPref(ctx).getInt(KEY_TOTAL_PEOPLE_FED, 0);
 
-        data = new UserDetailsData(id, name, fName, lName, username, social, profilePicture, points, level, (double) peopleFed, (double) totalPeopleFed);
+        data = new UserDetailsData(id, name, fName, lName, username, social, profilePicture, points, level, levelBadge, (double) peopleFed, (double) totalPeopleFed);
 
         return data;
+    }
+
+    public static String getLevel(Context ctx) {
+        return getSharedPref(ctx).getString(KEY_LEVEL, "");
     }
 
     public static int getId(Context ctx) {
@@ -164,6 +170,7 @@ public class EZSharedPreferences {
         editor.putString(KEY_PROFILE_PICTURE, data.getProfilePictureUrl());
         editor.putInt(KEY_POINTS, data.getPoints());
         editor.putString(KEY_LEVEL, data.getLevel());
+        editor.putString(KEY_LEVEL_BADGE, data.getLevelBadge());
         editor.putInt(KEY_PEOPLE_FED, (int) data.getPeopleFed());
         editor.putInt(KEY_TOTAL_PEOPLE_FED, (int) data.getTotalPeopleFed());
         editor.apply();

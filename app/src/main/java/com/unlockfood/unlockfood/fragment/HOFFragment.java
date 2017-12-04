@@ -15,6 +15,8 @@ import com.unlockfood.unlockfood.api.ApiClient;
 import com.unlockfood.unlockfood.api.ApiInterface;
 import com.unlockfood.unlockfood.api.HallOfFameData;
 import com.unlockfood.unlockfood.api.HallOfFameResponse;
+import com.unlockfood.unlockfood.builder.ToastBuilder;
+import com.unlockfood.unlockfood.utils.Util;
 
 import java.util.List;
 
@@ -45,7 +47,10 @@ public class HOFFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_hof, container, false);
         ButterKnife.bind(this, view);
 
-        initList();
+        if (Util.isInternetAvailable(getActivity()))
+            initList();
+        else
+            ToastBuilder.shortToast(getActivity(), "Please connect to internet and try again");
         return view;
     }
 

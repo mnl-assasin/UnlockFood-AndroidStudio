@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import com.unlockfood.unlockfood.R;
 import com.unlockfood.unlockfood.fragment.AccountFragment;
 import com.unlockfood.unlockfood.fragment.HOFFragment;
-import com.unlockfood.unlockfood.fragment.RewardsFragment;
+import com.unlockfood.unlockfood.fragment.Rewards2Fragment;
 import com.unlockfood.unlockfood.fragment.SettingsFragment;
 
 import butterknife.Bind;
@@ -53,7 +53,7 @@ public class DashboardActivity extends AppCompatActivity {
                 ivSettings.setBackgroundColor(getResources().getColor(R.color.windowBackground));
                 break;
             case 1:
-                fragment = new RewardsFragment();
+                fragment = new Rewards2Fragment();
 
                 ivAccount.setBackgroundColor(getResources().getColor(R.color.windowBackground));
                 ivRewards.setBackgroundColor(getResources().getColor(R.color.menuReward));

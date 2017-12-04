@@ -20,12 +20,12 @@ import com.unlockfood.unlockfood.api.ApiClient;
 import com.unlockfood.unlockfood.api.ApiInterface;
 import com.unlockfood.unlockfood.api.UserDetailsData;
 import com.unlockfood.unlockfood.api.UserDetailsResponse;
+import com.unlockfood.unlockfood.builder.ToastBuilder;
 import com.unlockfood.unlockfood.data.EZSharedPreferences;
+import com.unlockfood.unlockfood.utils.Util;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.IOException;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -82,7 +82,10 @@ public class AccountFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        getUserDetails();
+        if (Util.isInternetAvailable(getActivity()))
+            getUserDetails();
+        else
+            ToastBuilder.shortToast(getActivity(), "Please connect to internet and try again");
     }
 
     private void getUserDetails() {
@@ -96,15 +99,7 @@ public class AccountFragment extends BaseFragment {
                 if (response.isSuccessful())
                     saveDetails(response.body());
                 else {
-
-                    String error = "";
-                    try {
-                        error = response.errorBody().string();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                    Toast.makeText(getActivity(), error, Toast.LENGTH_LONG).show();
+                    Util.showResponseError(getActivity(), response);
                 }
             }
 
@@ -137,9 +132,16 @@ public class AccountFragment extends BaseFragment {
         tvTotalPeopleFed.setText(String.valueOf((int) data.getTotalPeopleFed()));
 
         Log.d(TAG, "Picture: " + data.getProfilePictureUrl());
-        if (!data.getProfilePictureUrl().equals(""))
-            Picasso.with(getActivity()).load(data.getProfilePictureUrl()).error(R.drawable.img_profile).into(civProfile);
-        Picasso.with(getActivity()).load(levelDrawables[getLevel(data.getLevel())]).into(ivLevel);
+        if (data.getProfilePictureUrl() != null)
+            if (!data.getProfilePictureUrl().equals(""))
+                Picasso.with(getActivity()).load(data.getProfilePictureUrl()).error(R.drawable.img_profile).into(civProfile);
+        String levelBadge = data.getLevelBadge();
+
+        Log.d(TAG, "Level badge:" + levelBadge);
+        if (!levelBadge.equals(""))
+            Picasso.with(getActivity()).load(levelBadge).error(R.drawable.img_level0).into(ivLevel);
+        else
+            Picasso.with(getActivity()).load(levelDrawables[getLevel(data.getLevel())]).into(ivLevel);
 
 //        int loginType = EZSharedPreferences.getLoginType(getActivity());
 //        if (loginType == Const.LOGIN_FACEBOOK)

@@ -6,9 +6,6 @@ import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -28,7 +25,6 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 import com.unlockfood.unlockfood.R;
 import com.unlockfood.unlockfood.api.AdClickRequest;
 import com.unlockfood.unlockfood.api.ApiClient;
@@ -96,37 +92,50 @@ public class PinActivity extends BaseActivity {
     @Bind(R.id.container)
     RelativeLayout container;
 
+    boolean offScreen = true;
+
+    @Bind(R.id.ivImg)
+    ImageView ivImg;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pin);
         ButterKnife.bind(this);
 
-        initData();
         loadAds();
         initMasterPin();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        offScreen = true;
+        initData();
     }
 
     private void initData() {
 
         String background = EZSharedPreferences.getPinBackground(this);
-        Picasso.with(this).load(Uri.parse(background)).error(R.drawable.black).into(new Target() {
-            @Override
-            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                container.setBackground(new BitmapDrawable(bitmap));
-            }
+        Picasso.with(this).load(Uri.parse(background)).resize(720, 1280).onlyScaleDown().centerCrop().error(R.drawable.black).into(ivImg);
 
-            @Override
-            public void onBitmapFailed(Drawable errorDrawable) {
 
-            }
-
-            @Override
-            public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-            }
-        });
-
+//        Picasso.with(this).load(Uri.parse(background)).error(R.drawable.black).into(new Target() {
+//            @Override
+//            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+//                container.setBackground(new BitmapDrawable(bitmap));
+//            }
+//
+//            @Override
+//            public void onBitmapFailed(Drawable errorDrawable) {
+//                Log.d(TAG, "bitmapFailed");
+//            }
+//
+//            @Override
+//            public void onPrepareLoad(Drawable placeHolderDrawable) {
+//                Log.d(TAG, "onPrepareLoad");
+//            }
+//        });
     }
 
     private void loadAds() {
@@ -136,8 +145,10 @@ public class PinActivity extends BaseActivity {
     private void initMasterPin() {
         String masterPin = EZSharedPreferences.getMasterPin(PinActivity.this);
         Log.d(TAG, masterPin);
-        if (masterPin.equals(""))
+        if (masterPin.equals("")) {
+            offScreen = false;
             startActivity(new Intent(PinActivity.this, PinNominateActivity.class));
+        }
     }
 
     @OnClick({R.id.iv1, R.id.iv2, R.id.iv3, R.id.iv4, R.id.iv5, R.id.iv6, R.id.iv7, R.id.iv8, R.id.iv9, R.id.iv0, R.id.tvSettings, R.id.tvCancel, R.id.tvDelete})
@@ -240,11 +251,9 @@ public class PinActivity extends BaseActivity {
     }
 
     private void processPin(String pinCode) {
-
-//        String pin = "1937";
         String masterPin = EZSharedPreferences.getMasterPin(PinActivity.this);
-
         if (masterPin.equals(pinCode)) {
+            offScreen = false;
             addClick();
             finishAffinity();
             postClick();
@@ -288,6 +297,7 @@ public class PinActivity extends BaseActivity {
     }
 
     private void onSettingsClick() {
+        offScreen = false;
         startActivity(new Intent(PinActivity.this, SettingsActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
     }
 
@@ -407,8 +417,12 @@ public class PinActivity extends BaseActivity {
 
     @Override
     protected void onUserLeaveHint() {
-//        super.onUserLeaveHint();
-//        onCancelClick();
-//        return;
+        super.onUserLeaveHint();
+        Log.d(TAG, "onUserLeaveHint");
+
+        if (offScreen)
+            onCancelClick();
+        else
+            offScreen = true;
     }
 }

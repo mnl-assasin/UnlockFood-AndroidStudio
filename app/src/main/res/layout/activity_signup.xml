@@ -36,9 +36,12 @@
                 android:layout_marginBottom="16dp"
                 android:background="@color/editTextBackground"
                 android:hint="First Name"
+                android:inputType="textPersonName"
+                android:maxLines="1"
                 android:paddingBottom="8dp"
                 android:paddingLeft="24dp"
                 android:paddingTop="8dp"
+                android:singleLine="true"
                 android:textColorHint="@color/editTextHint" />
 
             <EditText
@@ -48,9 +51,12 @@
                 android:layout_marginBottom="16dp"
                 android:background="@color/editTextBackground"
                 android:hint="Last Name"
+                android:inputType="textPersonName"
+                android:maxLines="1"
                 android:paddingBottom="8dp"
                 android:paddingLeft="24dp"
                 android:paddingTop="8dp"
+                android:singleLine="true"
                 android:textColorHint="@color/editTextHint" />
 
             <EditText
@@ -60,9 +66,12 @@
                 android:layout_marginBottom="16dp"
                 android:background="@color/editTextBackground"
                 android:hint="Username"
+                android:inputType="text"
+                android:maxLines="1"
                 android:paddingBottom="8dp"
                 android:paddingLeft="24dp"
                 android:paddingTop="8dp"
+                android:singleLine="true"
                 android:textColorHint="@color/editTextHint" />
 
             <EditText
@@ -73,9 +82,11 @@
                 android:background="@color/editTextBackground"
                 android:hint="Email"
                 android:inputType="textEmailAddress"
+                android:maxLines="1"
                 android:paddingBottom="8dp"
                 android:paddingLeft="24dp"
                 android:paddingTop="8dp"
+                android:singleLine="true"
                 android:textColorHint="@color/editTextHint" />
 
             <EditText
@@ -86,9 +97,11 @@
                 android:background="@color/editTextBackground"
                 android:hint="Password"
                 android:inputType="textPassword"
+                android:maxLines="1"
                 android:paddingBottom="8dp"
                 android:paddingLeft="24dp"
                 android:paddingTop="8dp"
+                android:singleLine="true"
                 android:textColorHint="@color/editTextHint" />
 
             <EditText
@@ -99,9 +112,11 @@
                 android:background="@color/editTextBackground"
                 android:hint="Retype Password"
                 android:inputType="textPassword"
+                android:maxLines="1"
                 android:paddingBottom="8dp"
                 android:paddingLeft="24dp"
                 android:paddingTop="8dp"
+                android:singleLine="true"
                 android:textColorHint="@color/editTextHint" />
 
             <TextView

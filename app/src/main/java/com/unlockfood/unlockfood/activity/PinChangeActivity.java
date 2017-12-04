@@ -1,9 +1,6 @@
 package com.unlockfood.unlockfood.activity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,7 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 import com.unlockfood.unlockfood.R;
 import com.unlockfood.unlockfood.builder.ToastBuilder;
 import com.unlockfood.unlockfood.data.EZSharedPreferences;
@@ -77,9 +73,9 @@ public class PinChangeActivity extends AppCompatActivity {
 
     int i;
     String pin = "";
+    @Bind(R.id.ivImg)
+    ImageView ivImg;
 
-    @Bind(R.id.background)
-    ImageView background;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,27 +97,9 @@ public class PinChangeActivity extends AppCompatActivity {
         String header[] = {"Enter PIN", "Enter new PIN", "Confirm new PIN"};
         tvHeader.setText(header[i]);
 
+        String background = EZSharedPreferences.getPinBackground(this);
+        Picasso.with(this).load(Uri.parse(background)).resize(720, 1280).onlyScaleDown().centerCrop().error(R.drawable.black).into(ivImg);
 
-        String backgroundImg = EZSharedPreferences.getPinBackground(this);
-        Log.d("Logger", "Background: " + backgroundImg);
-//        Picasso.with(this).load(Uri.parse(backgroundImg)).into(background);
-
-        Picasso.with(this).load(Uri.parse(backgroundImg)).error(R.drawable.black).into(new Target() {
-            @Override
-            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                container.setBackground(new BitmapDrawable(bitmap));
-            }
-
-            @Override
-            public void onBitmapFailed(Drawable errorDrawable) {
-                Log.d(TAG, "bitmapFailed");
-            }
-
-            @Override
-            public void onPrepareLoad(Drawable placeHolderDrawable) {
-                Log.d(TAG, "onPrepareLoad");
-            }
-        });
     }
 
     @Override

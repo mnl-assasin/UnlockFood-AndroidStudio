@@ -33,6 +33,9 @@ public interface ApiInterface {
     @GET("hall")
     Call<HallOfFameResponse> getHallOfFame();
 
+    @GET("levels")
+    Call<RewardsResponse> getLevels();
+
     @Multipart
     @POST("users/{id}/avatar")
     Call<UserDetailsResponse> postPicture(@Path("id") String id, @Part MultipartBody.Part file);
@@ -45,4 +48,8 @@ public interface ApiInterface {
 
     @POST("users/password-reset")
     Call<Void> postResetPassword(@Body ResetPasswordRequest request);
+
+    @POST("users/{id}/password")
+    Call<Void> postUpdatePassword(@Path("id") String id, @Body UpdatePasswordRequest request);
+
 }

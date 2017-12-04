@@ -4,8 +4,10 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -220,7 +222,7 @@ public class BackgroundChangeActivity extends AppCompatActivity {
     private void chooseImage() {
         Intent intent = new Intent();
         intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
     }
 
@@ -231,9 +233,25 @@ public class BackgroundChangeActivity extends AppCompatActivity {
         if (requestCode == PICK_IMAGE && resultCode == RESULT_OK && data != null) {
             Uri uri = data.getData();
 
+//            File f = new File(uri.toString());
+//            File f2 = new File(uri.getPath()) ;
+//            Log.d(TAG, "File path: " + f.getAbsolutePath());
+//            Log.d(TAG, "File2 path: " + f2.getAbsolutePath());
             selectedImage = uri.toString();
-            Log.d(TAG, "selected image: " + selectedImage);
-            Picasso.with(this).load(Uri.parse(selectedImage)).error(R.drawable.black).into(ivPreview);
+//            Log.d(TAG, "selected image: " + selectedImage);
+//            Picasso.with(this).load(Uri.parse(selectedImage)).error(R.drawable.black).into(ivPreview);
+
+            Picasso.with(this).load(uri).resize(720, 1280).onlyScaleDown().centerCrop().error(R.drawable.black).into(ivPreview);
+
         }
+    }
+
+    public String getPath(Uri uri) {
+        String[] projection = {MediaStore.Images.Media.DATA};
+        Cursor cursor = managedQuery(uri, projection, null, null, null);
+        startManagingCursor(cursor);
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        return cursor.getString(column_index);
     }
 }

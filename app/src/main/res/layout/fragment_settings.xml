@@ -165,95 +165,99 @@
                 android:textColor="#fff"
                 android:textStyle="bold" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:text="CHANGE PASSWORD"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/textPrimary"
-                android:textStyle="bold" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginBottom="8dp"
-                android:background="@color/termsDivider" />
-
-            <EditText
-                android:id="@+id/etOldPw"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@null"
-                android:hint="*Old Password"
-                android:inputType="textPassword"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp"
-                android:textColorHint="@color/editTextHint" />
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginBottom="8dp"
-                android:background="@color/termsDivider" />
-
-            <EditText
-                android:id="@+id/etNewPw"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@null"
-                android:hint="*New password"
-                android:inputType="textPassword"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp"
-                android:textColorHint="@color/editTextHint" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginBottom="8dp"
-                android:background="@color/termsDivider" />
-
-            <EditText
-                android:id="@+id/etConfirmPw"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@null"
-                android:hint="*Confirm password"
-                android:inputType="textPassword"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp"
-                android:textColorHint="@color/editTextHint" />
-
-            <Button
-                android:id="@+id/btnChangePW"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_weight="1"
-                android:background="#74c322"
-                android:text="CHANGE PASSWORD"
-                android:textColor="#fff"
-                android:textStyle="bold" />
-
             <LinearLayout
+                android:id="@+id/containerPassword"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
 
-                <Button
-                    android:id="@+id/btnLogout"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:text="CHANGE PASSWORD"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/textPrimary"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/termsDivider" />
+
+                <EditText
+                    android:id="@+id/etOldPw"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@color/headerSettings"
-                    android:text="LOG OUT"
+                    android:background="@null"
+                    android:hint="*Current Password"
+                    android:inputType="textPassword"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp"
+                    android:textColorHint="@color/editTextHint" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/termsDivider" />
+
+                <EditText
+                    android:id="@+id/etNewPw"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:hint="*New password"
+                    android:inputType="textPassword"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp"
+                    android:textColorHint="@color/editTextHint" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@color/termsDivider" />
+
+                <EditText
+                    android:id="@+id/etConfirmPw"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:hint="*Confirm password"
+                    android:inputType="textPassword"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp"
+                    android:textColorHint="@color/editTextHint" />
+
+                <Button
+                    android:id="@+id/btnChangePW"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_weight="1"
+                    android:background="#74c322"
+                    android:text="CHANGE PASSWORD"
                     android:textColor="#fff"
                     android:textStyle="bold" />
+
             </LinearLayout>
+
+            <Button
+                android:id="@+id/btnLogout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/headerSettings"
+                android:text="LOG OUT"
+                android:textColor="#fff"
+                android:textStyle="bold" />
+
 
         </LinearLayout>
     </ScrollView>
